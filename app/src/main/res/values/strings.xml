@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">DemoEditImage</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <string name="facebook_app_id">2524964404404698</string>
+    <string name="fb_login_protocol_scheme">fb2524964404404698</string>
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="uname_warning">Xin vui lòng nhập Email/Số điện thoại</string>
+    <string name="fullname_warning">Xin vui lòng nhập họ tên</string>
+    <string name="phone_warning">Xin vui lòng nhập số điện thoại</string>
+    <string name="email_warning">Xin vui lòng nhập email</string>
+    <string name="passwword_warning">Vui lòng nhập mật khẩu</string>
+    <string name="btn_search_product">Nhập tên, mã SKU, Barcode</string>
+    <string name="txt_productList">Danh sách sản phẩm</string>
+    <string name="txt_policy"><u>điều khoản sử dụng </u></string>
+    <string name="facebook">Facebook</string>
+    <string name="introduce1">Ứng dụng cập nhật ảnh chỉnh sửa lên sàn shopee miễn phí</string>
+
+    <string name="f">f</string>
+    <string name="sign_up">Đăng kí miễn phí</string>
+    <string name="log_in">Đăng nhập</string>
+    <string name="link_to_shopee1">Chúng tôi sẽ giúp bạn chỉnh sửa ảnh đơn giản và nhanh chóng, dễ dàng chỉnh sửa ảnh sản phẩm và update lại lên sàn shopee.</string>
+    <string name="link_to_shopee3">Kết nối Shopee</string>
+    <string name="welcome_to_shopee">Chào mừng đến với Sapo Decorate</string>
+    <string name="overview_menu">Tổng quan</string>
+    <string name="products_menu">Sản phẩm</string>
+    <string name="images_library">Thư viện ảnh</string>
+    <string name="hotline">Hotline</string>
+    <string name="help_menu">Trợ giúp</string>
+    <string name="profile_menu">Hồ sơ cá nhân</string>
+    <string name="logout_menu">Thoát</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="title_activity_login">Sign in</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="introduce2">Dành cho cửa hàng bán lẻ và shop online</string>
+    <string name="introduce3">Đăng ký để cập nhật ảnh chỉnh sửa lên sàn shopee miễn phí</string>
+    <string name="title_activity_overview_store">OverviewStoreActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="more_action">Thêm</string>
+</resources>

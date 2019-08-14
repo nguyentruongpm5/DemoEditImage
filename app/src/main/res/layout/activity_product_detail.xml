@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.ProductDetailActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            style="@style/BackButton2"
+            android:layout_weight="1"
+            android:minHeight="?attr/actionBarSize" />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:background="@color/txt_signup"
+            android:minHeight="?attr/actionBarSize">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_gravity="center"
+                android:text="Chi tiết sản phẩm"
+                android:textColor="@color/backgroundColor"
+                android:textSize="19dp" />
+
+        </android.support.v7.widget.Toolbar>
+
+        <ImageButton
+            android:id="@+id/btnSave"
+            style="@style/SaveButton"
+            android:layout_weight="1"
+            android:minHeight="?attr/actionBarSize"
+            android:src="@drawable/icons8_trash_24" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10">
+
+        <LinearLayout
+            android:id="@+id/capture_image_layout"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="2dp"
+            android:layout_weight="2.5"
+            android:background="@drawable/custom_btn_more_option_white"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_camera" />
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rclImage"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_input_product_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="15dp"
+        android:focusableInTouchMode="true"
+        app:errorTextAppearance="@style/TextLabelError"
+        app:hintTextAppearance="@style/TextLabelHint">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/productName_Edt"
+            style="@style/UnameEditText1"
+            android:hint="Tên sản phẩm" />
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_input_product_sku_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="15dp"
+        android:focusableInTouchMode="true"
+        app:errorTextAppearance="@style/TextLabelError"
+        app:hintTextAppearance="@style/TextLabelHint">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/skuCode_Edt"
+            style="@style/UnameEditText1"
+            android:hint="Mã SKU" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_input_product_description_Edt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="15dp"
+        android:focusableInTouchMode="true"
+        app:errorTextAppearance="@style/TextLabelError"
+        app:hintTextAppearance="@style/TextLabelHint">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/product_description_Edt"
+            style="@style/UnameEditText1"
+            android:hint="Mô tả" />
+    </android.support.design.widget.TextInputLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txtStatusNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:text="Trạng thái hiển thị trên Shopee: " />
+
+
+        <TextView
+            android:id="@+id/txtStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_toEndOf="@id/txtStatusNote"
+            android:gravity="center"
+            android:text="Thành công"
+            android:textColor="@color/colorGoogle" />
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragment.ProfileFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10"
+        android:background="@color/txt_signup">
+
+        <ImageButton
+            android:id="@+id/btnBackToLogin"
+            style="@style/BackButton2"
+            android:layout_weight="1"
+            android:minHeight="?attr/actionBarSize" />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:background="@color/txt_signup"
+            android:minHeight="?attr/actionBarSize">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Thông tin khách hàng"
+                android:textColor="@color/backgroundColor"
+                android:textSize="20dp"/>
+        </android.support.v7.widget.Toolbar>
+
+        <ImageButton
+            android:id="@+id/btnSave"
+            style="@style/SaveButton"
+            android:layout_weight="1"
+            android:minHeight="?attr/actionBarSize"
+            android:visibility="invisible"/>
+    </LinearLayout>
+
+
+    <TextView
+        style="@style/NormalTextView"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="5dp"
+        android:text="Họ và tên: " />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/fullNameEdt"
+            style="@style/UnameEditText1" />
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        style="@style/NormalTextView"
+        android:layout_marginStart="13dp"
+        android:text="Số điện thoại" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_input_phoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/phoneNumberEdt"
+            style="@style/PhoneNumberEditText" />
+    </android.support.design.widget.TextInputLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_marginStart="13dp"
+            android:id="@+id/txtEmail"
+            style="@style/NormalTextView"
+            android:text="Email: " />
+
+        <TextView
+            android:id="@+id/txtEmailAccount"
+            style="@style/NormalTextView"
+            android:layout_toEndOf="@id/txtEmail"
+            android:text="baotrang9999@gmail.com" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/btnChangePassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:background="@drawable/custom_btn_submit"
+            android:text="Đổi mật khẩu"
+            android:textAllCaps="false"
+            android:textColor="@color/backgroundColor" />
+    </LinearLayout>
+
+</LinearLayout>

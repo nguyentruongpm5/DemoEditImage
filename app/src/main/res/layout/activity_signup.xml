@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:orientation="vertical">
+
+        <!--Icon image-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/btnBackToLogin"
+                style="@style/BackButton" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/logo" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/text_input_fullname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
+                app:errorTextAppearance="@style/TextLabelError"
+                app:hintTextAppearance="@style/TextLabelHint"
+                android:focusableInTouchMode="true">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/fullNameEdt"
+                    style="@style/UnameEditText1"
+                    android:hint="Họ tên" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/text_input_phoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
+                app:errorTextAppearance="@style/TextLabelError"
+                app:hintTextAppearance="@style/TextLabelHint">
+
+                <!--<EditText-->
+                <!--android:id="@+id/phoneNumberEdt"-->
+                <!--style="@style/PhoneNumberEditText"-->
+                <!--android:hint="Số điện thoại" />-->
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/phoneNumberEdt"
+                    style="@style/PhoneNumberEditText"
+                    android:hint="Số điện thoại" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/text_input_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
+                app:errorTextAppearance="@style/TextLabelError"
+                app:hintTextAppearance="@style/TextLabelHint">
+
+                <!--<EditText-->
+                <!--android:id="@+id/emailEdt"-->
+                <!--style="@style/EmailEditText"-->
+                <!--android:hint="Email" />-->
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/emailEdt"
+                    style="@style/EmailEditText"
+                    android:hint="Email" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/text_input_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
+                app:errorTextAppearance="@style/TextLabelError"
+                app:hintTextAppearance="@style/TextLabelHint"
+                app:passwordToggleEnabled="true">
+
+                <!--<EditText-->
+                <!--android:id="@+id/passwordEdt"-->
+                <!--style="@style/PasswordEditText"-->
+                <!--android:hint="Mật khẩu" />-->
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/passwordEdt"
+                    style="@style/PasswordEditText1"
+                    android:hint="Mật khẩu" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <Button
+                android:id="@+id/signUpBtn"
+                style="@style/LoginButton"
+                android:layout_marginTop="20dp"
+                android:text="Đăng kí" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Bạn có thể đăng kí nhanh bằng tài khoản"
+                android:textAlignment="center" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:weightSum="1">
+
+                <Button
+                    android:id="@+id/btnLoginFacebook"
+                    style="@style/BtnFacebook" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
+
+
+

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <!--Icon image-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/btnBackToLogin"
+            style="@style/BackButton" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/logo" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="start|center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="false"
+            app:errorTextAppearance="@style/TextLabelError"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="15dp"
+            android:focusableInTouchMode="true">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/unameEdt"
+                style="@style/UnameEditText0"
+                android:drawableStart="@drawable/ic_envelope_alt_24dp"
+                android:drawablePadding="10dp"
+                android:paddingBottom="20dp"
+                android:paddingTop="20dp"
+                android:hint="Email" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true"
+            app:hintEnabled="false"
+            app:errorTextAppearance="@style/TextLabelError"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="15dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/passwordEdt"
+                style="@style/PasswordEditText0"
+                android:drawableStart="@drawable/ic_lock_alt_24dp"
+                android:drawablePadding="10dp"
+                android:paddingBottom="20dp"
+                android:paddingTop="20dp"
+                android:hint="Mật khẩu" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <TextView
+            android:id="@+id/txtForgetPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="13dp"
+            android:layout_marginBottom="10dp"
+            android:text="Quên mật khẩu?"
+            android:textAlignment="textEnd"
+            android:textColor="@color/txt_signup"/>
+
+        <Button
+            android:id="@+id/loginBtn"
+            style="@style/LoginButton" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="Hoặc, đăng nhập bằng" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:weightSum="1">
+
+            <Button
+                android:id="@+id/btnLoginFacebook"
+                style="@style/BtnFacebook" />
+
+            <!--<Button-->
+            <!--android:id="@+id/btnDangNhapGoogle"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="10dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@drawable/google_shape"-->
+            <!--android:drawableLeft="@drawable/ic_google"-->
+            <!--android:text="Google"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:textColor="@color/colorGoogle" />-->
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+
