@@ -2,6 +2,7 @@ package com.example.demoeditimage.activity;
 
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.example.demoeditimage.R;
 import com.example.demoeditimage.interfaces.CallApiRegistration;
 import com.example.demoeditimage.model.User;
+import com.example.demoeditimage.utils.RetrofitClient;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +52,8 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.txtForgetPassword)
     TextView txtForgetPassword;
 
+
+    private RetrofitClient retrofitClient = new RetrofitClient();
 //    @BindView(R.id.txtEmail)
 //    TextView txtEmail;
 //
@@ -106,12 +110,7 @@ public class LoginActivity extends AppCompatActivity {
         user.put("email", userName);
         user.put("password", password);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(CallApiRegistration.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        CallApiRegistration api = retrofit.create(CallApiRegistration.class);
+        CallApiRegistration api = retrofitClient.getCallApiRegistration();
 
 
         // gửi request lên server
@@ -119,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
 
         call.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(@NonNull Call<User> call,@NonNull Response<User> response) {
 //                if (!response.isSuccessful()) {
 //                    Toast.makeText(getActivity(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
 //                    Toast.makeText(getActivity(), "Sai tài khoản hoặc mật khẩu !!", Toast.LENGTH_SHORT).show();
@@ -139,12 +138,14 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(@NonNull Call<User> call,@NonNull Throwable t) {
                 Toast.makeText(getApplicationContext(), "network failure :( inform the user and possibly retry", Toast.LENGTH_SHORT).show();
             }
         });
 
     }
+
+
 
     // ẩn và hiển thị mật khẩu
 //    @OnClick(R.id.btnShowPassWord)
