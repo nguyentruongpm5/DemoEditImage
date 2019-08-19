@@ -19,6 +19,7 @@ import com.example.demoeditimage.R;
 import com.example.demoeditimage.interfaces.CallApiRegistration;
 import com.example.demoeditimage.model.User;
 import com.example.demoeditimage.model.param.UserParam;
+import com.example.demoeditimage.utils.RetrofitClient;
 
 import java.util.List;
 
@@ -65,6 +66,8 @@ public class SignupActivity extends AppCompatActivity {
     @BindView(R.id.text_input_password)
     TextInputLayout text_input_password;
 
+    private RetrofitClient retrofitClient = new RetrofitClient();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,8 +76,6 @@ public class SignupActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
     }
-
-
 
 
     @OnClick(R.id.btnBackToLogin)
@@ -154,14 +155,9 @@ public class SignupActivity extends AppCompatActivity {
         String email = emailEdt.getText().toString().trim();
         String password = passwordEdt.getText().toString().trim();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(CallApiRegistration.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        CallApiRegistration api = retrofitClient.getCallApiRegistration();
 
-        CallApiRegistration api = retrofit.create(CallApiRegistration.class);
-
-        UserParam user1 = new UserParam(fullName, phoneNumber, email, password,null,null);
+        UserParam user1 = new UserParam(fullName, phoneNumber, email, password, null, null);
 
         Call<User> call = api.registration(user1);
 
@@ -193,6 +189,7 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
 }
