@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Đăng nhập thành công !!", Toast.LENGTH_SHORT).show();
                     callLinkToShopeeActivity();
                 } else {
-                    if (!unameEdt.getText().toString().matches("") && !passwordEdt.getText().toString().matches(""))
+                    if (response.code() == 401)
                         Toast.makeText(getApplicationContext(), "Sai tài khoản hoặc mật khẩu !!", Toast.LENGTH_SHORT).show();
                 }
 //                }
