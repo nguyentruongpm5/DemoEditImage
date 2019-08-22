@@ -2,6 +2,7 @@ package com.example.demoeditimage.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -163,20 +164,18 @@ public class SignupActivity extends AppCompatActivity {
 
         call.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
                     return;
                 } else {
                     if (response.code() == 200) {
                         User user = response.body();
+                        assert user != null;
                         if (user.getSuccess() == 1) {
                             Toast.makeText(getApplicationContext(), "Đăng kí thành công !!", Toast.LENGTH_SHORT).show();
                         } else {
-                            if (!fullNameEdt.getText().toString().matches("")
-                                    && !phoneNumberEdt.getText().toString().matches("")
-                                    && !emailEdt.getText().toString().matches("")
-                                    && !passwordEdt.getText().toString().matches(""))
+                            if (user.getSuccess() == 0)
                                 Toast.makeText(getApplicationContext(), "Email đã tồn tại !!", Toast.LENGTH_SHORT).show();
                         }
                     }
