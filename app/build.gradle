@@ -39,4 +39,5 @@ dependencies {
     implementation files('libs/figma-import-plugin.jar')
 
     implementation 'commons-codec:commons-codec:1.13'
+    implementation 'com.google.code.gson:gson:2.8.5'
 }
