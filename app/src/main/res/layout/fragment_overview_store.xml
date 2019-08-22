@@ -5,22 +5,44 @@
     android:orientation="vertical">
 
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:weightSum="10"
         android:background="@color/txt_signup">
 
-        <TextView
-            android:id="@+id/toolbar_title"
+        <ImageButton
+            android:id="@+id/addStoreBtn"
+            style="@style/BackButton3"
+            android:layout_weight="1"
+            android:minHeight="?attr/actionBarSize" />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Tổng quan gian hàng"
-            android:textColor="@color/backgroundColor"
-            android:textSize="20dp" />
+            android:layout_weight="8"
+            android:background="@color/txt_signup"
+            android:minHeight="?attr/actionBarSize">
 
-    </android.support.v7.widget.Toolbar>
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_gravity="center"
+                android:text="Tổng quan gian hàng"
+                android:textColor="@color/backgroundColor"
+                android:textSize="19dp" />
+
+        </android.support.v7.widget.Toolbar>
+
+        <ImageButton
+            style="@style/SaveButton"
+            android:layout_weight="1"
+            android:minHeight="?attr/actionBarSize"
+            android:visibility="invisible"/>
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
 
