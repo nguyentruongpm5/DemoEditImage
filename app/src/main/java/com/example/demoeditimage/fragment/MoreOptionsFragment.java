@@ -1,6 +1,7 @@
 package com.example.demoeditimage.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.demoeditimage.R;
+import com.example.demoeditimage.activity.ChangePasswordActivity;
+import com.example.demoeditimage.activity.ProfileActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,9 +55,8 @@ public class MoreOptionsFragment extends Fragment {
 
     @OnClick(R.id.profile_layout)
     void clickToProfile (){
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame_main, new ProfileFragment());
-        fragmentTransaction.commit();
+        Intent intent = new Intent(getContext(), ProfileActivity.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.support_layout)

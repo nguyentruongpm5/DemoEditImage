@@ -2,7 +2,9 @@ package com.example.demoeditimage.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ProductItem {
+import java.io.Serializable;
+
+public class ProductItem implements Serializable {
 
 //    @SerializedName("productId")
     private long product_id;

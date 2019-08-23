@@ -4,7 +4,6 @@ package com.example.demoeditimage.fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,17 +24,10 @@ import com.example.demoeditimage.interfaces.CallLocalAPI;
 import com.example.demoeditimage.interfaces.CallProductlDetailListener;
 import com.example.demoeditimage.model.ProductItem;
 import com.example.demoeditimage.utils.RetrofitClient;
-import com.google.gson.Gson;
-
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,8 +35,6 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,7 +44,7 @@ public class ProductManagementFragment extends Fragment {
     @BindView(R.id.rclProductList)
     RecyclerView rclProductList;
 
-    private List<ProductItem> productItems;
+    private List<ProductItem> productItemList = new ArrayList<>();
     private ProductItem productItem;
 
     private RetrofitClient retrofitClient = new RetrofitClient();
@@ -80,16 +69,16 @@ public class ProductManagementFragment extends Fragment {
         getProducts();
 
 
-//        productItems.add(new ProductItem(1,"husky",null,
-//                "Cập nhật thành công",null,null,null,
-//                null, 0,0,0,0,0));
-//        productItems.add(new ProductItem(2,"Doraemon",null,
-//                "Cập nhật thành công",null,null,null,
-//                null, 0,0,0,0,0));
-//
-//        productItems.add(new ProductItem(3,"Sapo",null,
-//                "Cập nhật thành công",null,null,null,
-//                null, 0,0,0,0,0));
+        productItemList.add(new ProductItem(1,"husky","SKU1",
+                "Cập nhật thành công",null,null,null,
+                null, 0,0,0,0,0));
+        productItemList.add(new ProductItem(2,"Doraemon","SKU2",
+                "Cập nhật thành công",null,null,null,
+                null, 0,0,0,0,0));
+
+        productItemList.add(new ProductItem(3,"Sapo","SKU3",
+                "Cập nhật thành công",null,null,null,
+                null, 0,0,0,0,0));
 
 //        String json = new Gson().toJson(productItem);
 
@@ -97,12 +86,14 @@ public class ProductManagementFragment extends Fragment {
     }
 
     private void productDetailItem() {
-        if (productItems != null) {
-            ProductItemAdapter productItemAdapter = new ProductItemAdapter(productItems, new CallProductlDetailListener() {
+        if (productItemList != null) {
+            ProductItemAdapter productItemAdapter = new ProductItemAdapter(productItemList, new CallProductlDetailListener() {
                 @Override
                 public void itemProductClick(int position) {
-                    productItem = productItems.get(position);
+                    productItem = productItemList.get(position);
+
                     callProductDetailActivity();
+
                 }
             });
             rclProductList.setAdapter(productItemAdapter);
@@ -132,16 +123,13 @@ public class ProductManagementFragment extends Fragment {
                 if (!response.isSuccessful()) {
                     Toast.makeText(getActivity(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
                 } else {
-
-                    productItems = new ArrayList<>();
-                    assert response.body() != null;
-                    productItems.addAll(response.body());
+                    productItemList = response.body();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<List<ProductItem>> call, @NonNull Throwable t) {
-
+                Toast.makeText(getActivity(), "Mất kết nối", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -162,6 +150,9 @@ public class ProductManagementFragment extends Fragment {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             thumbImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
             byte[] b = baos.toByteArray();
+
+
+
             String temp = Base64.encodeToString(b, Base64.DEFAULT);
             return temp;
         } catch (Exception e) {
@@ -169,8 +160,13 @@ public class ProductManagementFragment extends Fragment {
         }
     }
 
+
+
     private void callProductDetailActivity() {
         Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+
+        intent.putExtra("productItem", productItem);
+
         startActivity(intent);
     }
 

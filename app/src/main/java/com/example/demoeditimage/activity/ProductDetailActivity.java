@@ -1,28 +1,24 @@
 package com.example.demoeditimage.activity;
 
-import android.Manifest;
 import android.content.DialogInterface;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.demoeditimage.R;
+import com.example.demoeditimage.model.ProductItem;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 
 import butterknife.BindView;
@@ -31,19 +27,45 @@ import butterknife.OnClick;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
-//    private static final int MY_CAMERA_PERMISSION_CODE = 100 ;
+    //    private static final int MY_CAMERA_PERMISSION_CODE = 100 ;
     private static final int CAMERA_REQUEST = 52;
 
     @BindView(R.id.capture_image_layout)
     LinearLayout capture_image_layout;
     private int GALLERY_RESULT = 2;
 
+
+
+    private ProductItem productItem;
+
+    @BindView(R.id.productName_Edt)
+    TextInputEditText productName_Edt;
+
+    @BindView(R.id.skuCode_Edt)
+    TextInputEditText skuCode_Edt;
+
+    public ProductDetailActivity() {
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
+
         ButterKnife.bind(this);
+
+
+
+        ProductItem productItem = (ProductItem) getIntent().getSerializableExtra("productItem");
+
+        productName_Edt.setText(productItem.getProduct_name());
+
+        skuCode_Edt.setText(productItem.getProduct_sku());
+
     }
+
+
 
     @OnClick(R.id.btnBack)
     void clickToBack() {
@@ -54,6 +76,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     void detailProduct() {
         showDialog();
     }
+
+
 
     private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -93,6 +117,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
@@ -110,4 +135,5 @@ public class ProductDetailActivity extends AppCompatActivity {
             Toast.makeText(getBaseContext(), "You haven't picked Image", Toast.LENGTH_LONG).show();
         }
     }
+
 }
