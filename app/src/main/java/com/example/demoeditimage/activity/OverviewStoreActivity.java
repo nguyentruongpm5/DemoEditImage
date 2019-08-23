@@ -8,13 +8,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.example.demoeditimage.R;
 import com.example.demoeditimage.fragment.MoreOptionsFragment;
 import com.example.demoeditimage.fragment.OverviewStoreFragment;
 import com.example.demoeditimage.fragment.ProductManagementFragment;
-import com.example.demoeditimage.fragment.ProfileFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,7 +48,7 @@ public class OverviewStoreActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.images_library:
-                        setFragment(new ProfileFragment());
+//                        setFragment(new ProfileFragment());
                         return true;
 
                     case R.id.moreAction:

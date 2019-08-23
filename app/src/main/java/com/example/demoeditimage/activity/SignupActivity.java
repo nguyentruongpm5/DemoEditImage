@@ -2,6 +2,7 @@ package com.example.demoeditimage.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import com.example.demoeditimage.R;
 import com.example.demoeditimage.interfaces.CallApiRegistration;
 import com.example.demoeditimage.model.User;
 import com.example.demoeditimage.model.param.UserParam;
+import com.example.demoeditimage.utils.RetrofitClient;
 
 import java.util.List;
 
@@ -65,6 +67,8 @@ public class SignupActivity extends AppCompatActivity {
     @BindView(R.id.text_input_password)
     TextInputLayout text_input_password;
 
+    private RetrofitClient retrofitClient = new RetrofitClient();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,8 +77,6 @@ public class SignupActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
     }
-
-
 
 
     @OnClick(R.id.btnBackToLogin)
@@ -154,33 +156,26 @@ public class SignupActivity extends AppCompatActivity {
         String email = emailEdt.getText().toString().trim();
         String password = passwordEdt.getText().toString().trim();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(CallApiRegistration.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        CallApiRegistration api = retrofitClient.getCallApiRegistration();
 
-        CallApiRegistration api = retrofit.create(CallApiRegistration.class);
-
-        UserParam user1 = new UserParam(fullName, phoneNumber, email, password,null,null);
+        UserParam user1 = new UserParam(fullName, phoneNumber, email, password, null, null);
 
         Call<User> call = api.registration(user1);
 
         call.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
                     return;
                 } else {
                     if (response.code() == 200) {
                         User user = response.body();
+                        assert user != null;
                         if (user.getSuccess() == 1) {
                             Toast.makeText(getApplicationContext(), "Đăng kí thành công !!", Toast.LENGTH_SHORT).show();
                         } else {
-                            if (!fullNameEdt.getText().toString().matches("")
-                                    && !phoneNumberEdt.getText().toString().matches("")
-                                    && !emailEdt.getText().toString().matches("")
-                                    && !passwordEdt.getText().toString().matches(""))
+                            if (user.getSuccess() == 0)
                                 Toast.makeText(getApplicationContext(), "Email đã tồn tại !!", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -193,6 +188,7 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
 }
