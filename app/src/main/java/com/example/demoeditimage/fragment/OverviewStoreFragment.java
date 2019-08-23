@@ -1,13 +1,20 @@
 package com.example.demoeditimage.fragment;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.demoeditimage.R;
@@ -23,6 +30,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,6 +79,32 @@ public class OverviewStoreFragment extends Fragment {
         shopInfoOverviews.add(new ShopInfoOverview("abc",null,
                 "Đã cập nhật","shopee.vn/126468"));
         return view;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @OnClick(R.id.addStoreBtn)
+    void addStore (){
+        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+
+        final EditText edittext = new TextInputEditText(getActivity());
+
+        alert.setMessage("Thêm của hàng");
+        alert.setView(R.layout.edt_addstore);
+
+        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String shopName = edittext.getText().toString();
+                Toast.makeText(getContext(), "Tên cừa hàng vừa thêm: " + shopName, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        alert.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // what ever you want to do with No option.
+            }
+        });
+
+        alert.show();
     }
 
 }

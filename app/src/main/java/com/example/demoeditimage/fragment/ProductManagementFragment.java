@@ -121,7 +121,7 @@ public class ProductManagementFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<List<ProductItem>> call, @NonNull Response<List<ProductItem>> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(getActivity(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getActivity(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
                 } else {
                     productItemList = response.body();
                 }
