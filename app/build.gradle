@@ -39,4 +39,9 @@ dependencies {
     implementation files('libs/figma-import-plugin.jar')
 
     implementation 'commons-codec:commons-codec:1.13'
+
+    implementation group: 'com.cloudinary', name: 'cloudinary-android', version: '1.24.0'
+
+    implementation "com.squareup.picasso:picasso:2.71828"
+
 }
