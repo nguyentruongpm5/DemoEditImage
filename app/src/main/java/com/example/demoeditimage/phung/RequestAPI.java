@@ -5,6 +5,7 @@ import com.example.demoeditimage.phung.model.response.GetItemDetailResponse;
 import com.example.demoeditimage.phung.model.response.GetItemListResponse;
 import com.example.demoeditimage.phung.model.response.Product;
 import com.example.demoeditimage.phung.model.response.Shop;
+import com.example.demoeditimage.phung.model.response.ShopGallery;
 import com.example.demoeditimage.phung.model.response.UpdateItemImgResponse;
 
 import java.util.List;
@@ -22,6 +23,15 @@ public interface RequestAPI {
     @POST("login")
     Call<Map> signIn(@Body Map<String, Object> user);
 
+    @POST("user/updateinfo")
+    Call<Map> updateInfo(@Header("Authorization") String token, @Body Map<String, String> userInfo);
+
+    @POST("user/changepassword")
+    Call<Map<String, Integer>> changePassord(@Header("Authorization") String token, @Body Map<String, String> changePassBody);
+
+    @POST("user/resetPassword")
+    Call<Map> resetPassword(@Header("Authorization") String token, @Query("email") String email);
+
     @GET("shop")
     Call<List<Shop>> getShops(@Header("Authorization") String token);
 
@@ -33,4 +43,7 @@ public interface RequestAPI {
 
     @POST("test/updateItemImg")
     Call<UpdateItemImgResponse> updateItemImg(@Header("Authorization") String token, @Body UpdateItemImgRequest updateItemImgRequest);
+
+    @GET("resources/search")
+    Call<List<ShopGallery>> getGallery(@Header("Authorization") String token);
 }
