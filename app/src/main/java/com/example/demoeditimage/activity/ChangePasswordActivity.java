@@ -118,7 +118,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         CallApiRegistration api = retrofit.create(CallApiRegistration.class);
 
-        UserParam userParam = new UserParam(null,null,null,recentPassword,newPassword,null);
+        UserParam userParam = new UserParam(null,null,null,null,recentPassword,newPassword,null);
 
         Call<User> call = api.changePassword(userParam);
 

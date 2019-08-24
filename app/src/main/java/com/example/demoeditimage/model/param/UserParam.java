@@ -5,15 +5,21 @@ public class UserParam {
     private String phone;
     private String email;
     private String password;
+    private String token;
     private String newPasword;
     private String confirmPassword;
 
 
-    public UserParam(String username, String phone, String email, String password, String newPasword, String confirmPassword) {
+    public UserParam(String username, String phone, String email, String password,String token, String newPasword, String confirmPassword) {
         this.username = username;
         this.phone = phone;
         this.email = email;
         this.password = password;
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
     }
 
     public String getNewPasword() {

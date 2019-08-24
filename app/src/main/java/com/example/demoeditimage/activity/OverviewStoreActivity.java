@@ -1,5 +1,7 @@
 package com.example.demoeditimage.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -72,6 +74,23 @@ public class OverviewStoreActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_main, new OverviewStoreFragment()).commit();
     }
 
+
+    @Override
+    public void onBackPressed() {
+
+        new AlertDialog.Builder(this)
+                .setTitle("Thông báo")
+                .setMessage("Bạn có muốn thoát ra khỏi ứng dụng không ?")
+                .setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("Không", null)
+                .show();
+
+    }
 }
 
 

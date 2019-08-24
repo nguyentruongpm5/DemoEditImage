@@ -1,60 +1,60 @@
 package com.example.demoeditimage.model.ShopInfo;
 
 public class ShopInfo {
-    private long shop_id;
-    private String shop_name;
-    private String[] shop_images;
-    private String shop_status;
-    private String shop_decription;
+    private Long id;
+    private Long shop_id;
+    private String name;
+    private Long createDate;
+    private Long status;
 
     public ShopInfo() {
     }
 
-    public ShopInfo(long shop_id, String shop_name, String[] shop_images, String shop_status, String shop_decription) {
+    public ShopInfo(Long id, Long shop_id, String name, Long createDate, Long status) {
+        this.id = id;
         this.shop_id = shop_id;
-        this.shop_name = shop_name;
-        this.shop_images = shop_images;
-        this.shop_status = shop_status;
-        this.shop_decription = shop_decription;
+        this.name = name;
+        this.status = status;
+        this.createDate = createDate;
     }
 
-    public long getShop_id() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getShop_id() {
         return shop_id;
     }
 
-    public String getShop_name() {
-        return shop_name;
-    }
-
-    public String[] getShop_images() {
-        return shop_images;
-    }
-
-    public String getShop_status() {
-        return shop_status;
-    }
-
-    public String getShop_decription() {
-        return shop_decription;
-    }
-
-    public void setShop_id(long shop_id) {
+    public void setShop_id(Long shop_id) {
         this.shop_id = shop_id;
     }
 
-    public void setShop_name(String shop_name) {
-        this.shop_name = shop_name;
+    public String getName() {
+        return name;
     }
 
-    public void setShop_images(String[] shop_images) {
-        this.shop_images = shop_images;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setShop_status(String shop_status) {
-        this.shop_status = shop_status;
+    public Long getCreateDate() {
+        return createDate;
     }
 
-    public void setShop_decription(String shop_decription) {
-        this.shop_decription = shop_decription;
+    public void setCreateDate(Long createDate) {
+        this.createDate = createDate;
+    }
+
+    public Long getStatus() {
+        return status;
+    }
+
+    public void setStatus(Long status) {
+        this.status = status;
     }
 }

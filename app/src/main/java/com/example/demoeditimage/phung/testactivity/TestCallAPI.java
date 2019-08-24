@@ -171,6 +171,7 @@ public class TestCallAPI extends AppCompatActivity {
         HOST_URL = MyConst.getHostAddr();
 
         Retrofit retrofit  = APIClient.getClient(HOST_URL);
+
         RequestAPI callApi = retrofit.create(RequestAPI.class);
 
         String authorization = MyConst.getJwtToken();
@@ -243,6 +244,7 @@ public class TestCallAPI extends AppCompatActivity {
             @Override
             public void onResponse(Call<UpdateItemImgResponse> call, Response<UpdateItemImgResponse> response) {
                 if (response.isSuccessful()) {
+                    assert response.body() != null;
                     String msg = response.body().getMsg();
                     if (msg == null || !(msg.equals("Update item image success") || msg.equals("Nothing change for images"))) {
                         tvStatus.setText("Updated failed!");

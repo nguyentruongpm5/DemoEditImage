@@ -1,6 +1,5 @@
 package com.example.demoeditimage.activity;
 
-
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -18,6 +17,8 @@ import android.widget.Toast;
 import com.example.demoeditimage.R;
 import com.example.demoeditimage.interfaces.CallApiRegistration;
 import com.example.demoeditimage.model.User;
+import com.example.demoeditimage.model.param.UserParam;
+import com.example.demoeditimage.utils.MyConst;
 import com.example.demoeditimage.utils.RetrofitClient;
 
 import java.util.HashMap;
@@ -72,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnTextChanged(value = R.id.unameEdt, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void unameChanged() {
-        if (!unameEdt.getText().toString().isEmpty()){
+        if (!unameEdt.getText().toString().isEmpty()) {
 //            txtEmail.setVisibility(View.VISIBLE);
             text_input_username.setErrorEnabled(false);
         }
@@ -81,8 +82,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnTextChanged(value = R.id.passwordEdt, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void passwordChanged() {
-        if (!passwordEdt.getText().toString().isEmpty())
-        {
+        if (!passwordEdt.getText().toString().isEmpty()) {
 //            txtPassword.setVisibility(View.VISIBLE);
             text_input_password.setErrorEnabled(false);
         }
@@ -98,6 +98,8 @@ public class LoginActivity extends AppCompatActivity {
         if (passwordEdt.getText().toString().matches(""))
             text_input_password.setError("Xin vui lòng nhập mật khẩu");
 
+//        callLinkToShopeeActivity();
+
         getUsers();
     }
 
@@ -107,45 +109,43 @@ public class LoginActivity extends AppCompatActivity {
         String password = passwordEdt.getText().toString().trim();
 
         final Map<String, Object> user = new HashMap<>();
-        user.put("email", userName);
-        user.put("password", password);
+        user.put("email", "hello@gmail.com");
+        user.put("password", "123456");
 
         CallApiRegistration api = retrofitClient.getCallApiRegistration();
 
 
         // gửi request lên server
-        Call<User> call = api.login(user);
-
-        call.enqueue(new Callback<User>() {
+        Call<UserParam> call = api.login(user);
+        call.enqueue(new Callback<UserParam>() {
             @Override
-            public void onResponse(@NonNull Call<User> call,@NonNull Response<User> response) {
-//                if (!response.isSuccessful()) {
-//                    Toast.makeText(getActivity(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
-//                    Toast.makeText(getActivity(), "Sai tài khoản hoặc mật khẩu !!", Toast.LENGTH_SHORT).show();
-//                    return;
-
-//                }
-//                else {
-//                    Toast.makeText(getActivity(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+            public void onResponse(Call<UserParam> call, Response<UserParam> response) {
+                UserParam userParam = response.body();
                 if (response.code() == 200) {
+                    MyConst.setJwtToken(userParam.getToken());
                     Toast.makeText(getApplicationContext(), "Đăng nhập thành công !!", Toast.LENGTH_SHORT).show();
-                    callLinkToShopeeActivity();
-                } else {
-                    if (response.code() == 401)
-                        Toast.makeText(getApplicationContext(), "Sai tài khoản hoặc mật khẩu !!", Toast.LENGTH_SHORT).show();
-                }
-//                }
+                    callOverviewStoreActivity();
+                } else if (response.code() == 401)
+                    Toast.makeText(getApplicationContext(), "Sai tài khoản hoặc mật khẩu !!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onFailure(@NonNull Call<User> call,@NonNull Throwable t) {
+            public void onFailure(Call<UserParam> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "network failure :( inform the user and possibly retry", Toast.LENGTH_SHORT).show();
+
             }
         });
+
+
 
     }
 
 
+
+
+
+
+//                }
 
     // ẩn và hiển thị mật khẩu
 //    @OnClick(R.id.btnShowPassWord)
@@ -171,11 +171,13 @@ public class LoginActivity extends AppCompatActivity {
 
 
     // gọi fragment main chính
-    private void callLinkToShopeeActivity() {
-        Intent intent = new Intent(this, LinkToShopeeActivity.class);
+    private void callOverviewStoreActivity() {
+        Intent intent = new Intent(this, OverviewStoreActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
         startActivity(intent);
     }
-
 
 
 //    private void hideKeyBoard() {

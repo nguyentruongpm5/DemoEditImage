@@ -32,13 +32,13 @@ public class LinkToShopeeActivity extends AppCompatActivity {
     }
 
     private void callOverviewStoreActivity() {
-//        Intent intent = new Intent(this, OverviewStoreActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this, OverviewStoreActivity.class);
+        startActivity(intent);
 //        calToken(redirectURL,partnerKey);
 
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("https://google.com"));
-        startActivity(browserIntent);
+//        Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+//                Uri.parse("https://google.com"));
+//        startActivity(browserIntent);
     }
 
     @OnClick (R.id.btnBackToLogin)

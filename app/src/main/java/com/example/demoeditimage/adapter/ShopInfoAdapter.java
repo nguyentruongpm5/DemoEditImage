@@ -20,10 +20,10 @@ import butterknife.ButterKnife;
 public class ShopInfoAdapter extends RecyclerView.Adapter<ShopInfoAdapter.ViewHolder>{
 
 
-    private List<ShopInfoOverview> shopInfoList;
+    private List<ShopInfo> shopInfoList;
     private CallShopDetailListener callShopDetailListener;
 
-    public ShopInfoAdapter(List<ShopInfoOverview> shopInfoList, CallShopDetailListener callShopDetailListener) {
+    public ShopInfoAdapter(List<ShopInfo> shopInfoList, CallShopDetailListener callShopDetailListener) {
         this.shopInfoList = shopInfoList;
         this.callShopDetailListener = callShopDetailListener;
     }
@@ -40,13 +40,13 @@ public class ShopInfoAdapter extends RecyclerView.Adapter<ShopInfoAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
 
-        ShopInfoOverview shopInfoOverview = shopInfoList.get(i);
+        ShopInfo shopInfo = shopInfoList.get(i);
 
-        viewHolder.txtShopName.setText(shopInfoOverview.getShop_name());
+        viewHolder.txtShopName.setText(shopInfo.getName());
 
-        viewHolder.txtShopSite.setText(shopInfoOverview.getShop_site());
+        viewHolder.txtShopSite.setText("htttps://shopee.vn/shop/" + shopInfo.getId());
 
-        viewHolder.txtShopStatus.setText(shopInfoOverview.getShop_status());
+        viewHolder.txtShopStatus.setText(shopInfo.getStatus()==1?"Đang kết nối":"Ngừng kết nối");
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

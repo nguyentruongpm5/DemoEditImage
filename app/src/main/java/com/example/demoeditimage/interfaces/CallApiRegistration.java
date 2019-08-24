@@ -12,10 +12,10 @@ import retrofit2.http.POST;
 public interface CallApiRegistration {
 //    http://dev.superman-academy.com
 
-    String BASE_URL = "http://192.168.9.253:8181/api/v1/";
+    String BASE_URL = "http://172.104.47.79:8181/api/v1/";
 
     @POST("login")
-    Call<User> login(@Body Map<String, Object> user);
+    Call<UserParam> login(@Body Map<String, Object> user);
 
     @POST("registration")
     Call<User> registration(@Body UserParam user1);
