@@ -5,17 +5,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.demoeditimage.R;
 import com.example.demoeditimage.interfaces.CallShopDetailListener;
 import com.example.demoeditimage.model.ShopInfo.ShopInfo;
 import com.example.demoeditimage.model.ShopInfo.ShopInfoOverview;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ShopInfoAdapter extends RecyclerView.Adapter<ShopInfoAdapter.ViewHolder>{
 
@@ -42,9 +45,17 @@ public class ShopInfoAdapter extends RecyclerView.Adapter<ShopInfoAdapter.ViewHo
 
         ShopInfo shopInfo = shopInfoList.get(i);
 
+        if (shopInfo.getAvatar() != null) {
+            Picasso.get()
+                    .load(shopInfo.getAvatar())
+                    .placeholder(R.mipmap.placeholder_images)
+                    .error(R.drawable.ic_error_black_24dp)
+                    .into(viewHolder.civAvatar);
+        }
+
         viewHolder.txtShopName.setText(shopInfo.getName());
 
-        viewHolder.txtShopSite.setText("htttps://shopee.vn/shop/" + shopInfo.getId());
+        viewHolder.txtShopSite.setText("htttps://shopee.vn/shop/" + shopInfo.getShop_id());
 
         viewHolder.txtShopStatus.setText(shopInfo.getStatus()==1?"Đang kết nối":"Ngừng kết nối");
 
@@ -63,6 +74,9 @@ public class ShopInfoAdapter extends RecyclerView.Adapter<ShopInfoAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.imgShop)
+        CircleImageView civAvatar;
 
         @BindView(R.id.txtShopName)
         TextView txtShopName;
