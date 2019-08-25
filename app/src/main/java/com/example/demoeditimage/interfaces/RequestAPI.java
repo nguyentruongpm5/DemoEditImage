@@ -33,6 +33,9 @@ public interface RequestAPI {
     @GET("shop")
     Call<List<ShopInfo>> getShops(@Header("Authorization") String token);
 
+    @POST("test/getShopInfo")
+    Call<Map> getShopInfo(@Header("Authorization") String token, @Body Map<String, Long> getShopInfoRequest);
+
     @GET("test/getItemList")
     Call<GetItemListResponse> getItemList(@Header("Authorization") String token, @Query("offset") Integer offset, @Query("entries") Integer entries, @Query("shopid") Long shopid);
 

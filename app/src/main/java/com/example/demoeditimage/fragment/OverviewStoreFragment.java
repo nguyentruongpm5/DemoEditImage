@@ -36,7 +36,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -154,6 +156,7 @@ public class OverviewStoreFragment extends Fragment {
 //                    tvStatus.setText("Get shops successfully: " + mShops.size());
 
                     Toast.makeText(getActivity(), "Get shops successfully" + "\n" + shopList.size(), Toast.LENGTH_SHORT).show();
+                    getShopAvatar();
                 } else {
 //                    tvStatus.setText("Failed: " + mShops.size());
                     Toast.makeText(getActivity(), "Something happened, cannot connect to the server", Toast.LENGTH_SHORT).show();
@@ -166,6 +169,39 @@ public class OverviewStoreFragment extends Fragment {
                 t.printStackTrace();
             }
         });
+    }
+
+    private void getShopAvatar() {
+        HOST_URL = MyConst.getHostAddr();
+        Retrofit retrofit  = APIClient.getClient(HOST_URL);
+        RequestAPI callApi = retrofit.create(RequestAPI.class);
+        String authorization = MyConst.getJwtToken();
+
+        for (int i=0 ; i<shopList.size(); i++) {
+            final ShopInfo shop = shopList.get(i);
+            Map<String, Long> body = new HashMap<>();
+            body.put("partner_id", MyConst.partner_id);
+            body.put("shopid", shop.getShop_id());
+            final int finalI = i;
+            callApi.getShopInfo(authorization, body).enqueue(new Callback<Map>() {
+                @Override
+                public void onResponse(Call<Map> call, Response<Map> response) {
+                    if (response.isSuccessful()) {
+                        List<String> images = (List<String>) response.body().get("images");
+                        if (images!= null) {
+                            shop.setAvatar(images.get(0));
+                            shopList.set(finalI, shop);
+                            shopInfoAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Map> call, Throwable t) {
+
+                }
+            });
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

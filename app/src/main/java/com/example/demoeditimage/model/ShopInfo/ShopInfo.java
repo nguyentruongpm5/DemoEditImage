@@ -6,6 +6,7 @@ public class ShopInfo {
     private String name;
     private Long createDate;
     private Long status;
+    private String avatar;
 
     public ShopInfo() {
     }
@@ -56,5 +57,13 @@ public class ShopInfo {
 
     public void setStatus(Long status) {
         this.status = status;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }
