@@ -109,9 +109,11 @@ public class ProductManagementFragment extends Fragment {
 
         productDetailItem();
 
+        // lấy danh sách sản phẩm
         getProducts();
 
 
+        // gán dữ liẹu cho spinner
         getStoreList();
 
         getShopList();
@@ -162,7 +164,9 @@ public class ProductManagementFragment extends Fragment {
 
         String authorization = MyConst.getJwtToken();
 
-
+        if (shopId == 0) {
+            return;
+        }
         callApi.getItemList(authorization, offset, entries, shopId).enqueue(new Callback<GetItemListResponse>() {
             @Override
             public void onResponse(Call<GetItemListResponse> call, Response<GetItemListResponse> response) {
@@ -317,7 +321,8 @@ public class ProductManagementFragment extends Fragment {
                 if (!response.isSuccessful()) {
 //                    Toast.makeText(getActivity(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
                 } else {
-                    productItemList = response.body();
+                    productItemList.clear();
+                    productItemList.addAll(response.body());
                 }
             }
 
@@ -367,4 +372,9 @@ public class ProductManagementFragment extends Fragment {
         startActivity(intent);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getAllItems();
+    }
 }

@@ -1,6 +1,8 @@
 package com.example.demoeditimage.fragment;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.demoeditimage.R;
 import com.example.demoeditimage.activity.ChangePasswordActivity;
+import com.example.demoeditimage.activity.IntroduceActivity;
 import com.example.demoeditimage.activity.ProfileActivity;
 
 import butterknife.BindView;
@@ -66,7 +69,21 @@ public class MoreOptionsFragment extends Fragment {
 
     @OnClick(R.id.signOut_layout)
     void clickToSignout(){
-        Toast.makeText(getActivity(), "Sign out", Toast.LENGTH_SHORT).show();
+        new AlertDialog.Builder(getActivity())
+                .setTitle("Thông báo")
+                .setMessage("Bạn có muốn thoát ra khỏi ứng dụng không ?")
+                .setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(getActivity(),IntroduceActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("Không", null)
+                .show();
+
     }
 
 }

@@ -173,7 +173,7 @@ public class OverviewStoreFragment extends Fragment {
 
     private void getShopAvatar() {
         HOST_URL = MyConst.getHostAddr();
-        Retrofit retrofit  = APIClient.getClient(HOST_URL);
+        Retrofit retrofit  = RetrofitClient.getClient(HOST_URL);
         RequestAPI callApi = retrofit.create(RequestAPI.class);
         String authorization = MyConst.getJwtToken();
 
@@ -234,4 +234,9 @@ public class OverviewStoreFragment extends Fragment {
         alert.show();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getShops();
+    }
 }
