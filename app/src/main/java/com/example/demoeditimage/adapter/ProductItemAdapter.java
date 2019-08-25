@@ -89,6 +89,7 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
         CircleImageView image_product;
 
         @BindView(R.id.txtProductName)
+
         TextView txtProductName;
 
         @BindView(R.id.txtStatus)

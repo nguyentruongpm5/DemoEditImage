@@ -1,8 +1,9 @@
 package com.example.demoeditimage.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Product {
+public class Product  implements Serializable {
     private Long item_id;
     private Long shopid;
     private String status;

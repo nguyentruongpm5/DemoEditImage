@@ -158,5 +158,25 @@
             android:textColor="@color/colorGoogle" />
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:gravity="center|bottom"
+        android:orientation="vertical"
+        android:layout_marginBottom="20dp">
+
+        <Button
+            android:id="@+id/btnUpdateItemImg"
+            style="@style/LoginButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center"
+            android:text="Cập nhật lên Shopee"
+            android:textAllCaps="false"/>
+
+
+    </LinearLayout>
+
 
 </LinearLayout>

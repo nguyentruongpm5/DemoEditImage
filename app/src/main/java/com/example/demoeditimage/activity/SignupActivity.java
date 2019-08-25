@@ -158,7 +158,7 @@ public class SignupActivity extends AppCompatActivity {
 
         CallApiRegistration api = retrofitClient.getCallApiRegistration();
 
-        UserParam user1 = new UserParam(fullName, phoneNumber, email, password, null,null, null);
+        UserParam user1 = new UserParam(fullName, phoneNumber, email, password, null,null, null,0);
 
         Call<User> call = api.registration(user1);
 

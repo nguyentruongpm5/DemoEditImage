@@ -123,6 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                 UserParam userParam = response.body();
                 if (response.code() == 200) {
                     MyConst.setJwtToken(userParam.getToken());
+                    MyConst.setUserid(userParam.getId());
                     Toast.makeText(getApplicationContext(), "Đăng nhập thành công !!", Toast.LENGTH_SHORT).show();
                     callOverviewStoreActivity();
                 } else if (response.code() == 401)
@@ -139,7 +140,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
-
 
 
 

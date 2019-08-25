@@ -4,7 +4,6 @@ import com.example.demoeditimage.model.GetItemListResponse;
 import com.example.demoeditimage.model.ShopInfo.ShopInfo;
 import com.example.demoeditimage.model.User;
 import com.example.demoeditimage.model.param.UserParam;
-import com.example.demoeditimage.phung.model.response.Shop;
 import com.example.demoeditimage.request.UpdateItemImgRequest;
 import com.example.demoeditimage.response.GetItemDetailResponse;
 import com.example.demoeditimage.response.UpdateItemImgResponse;

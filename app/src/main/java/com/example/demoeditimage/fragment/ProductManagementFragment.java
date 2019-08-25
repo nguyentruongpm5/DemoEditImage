@@ -284,9 +284,9 @@ public class ProductManagementFragment extends Fragment {
             productItemAdapter = new ProductItemAdapter(mProducts, new CallProductlDetailListener() {
                 @Override
                 public void itemProductClick(int position) {
-//                    productItem = mProducts.get(position);
+                    productItem = mProducts.get(position);
                     Toast.makeText(getActivity(), "ahii", Toast.LENGTH_SHORT).show();
-//                    callProductDetailActivity();
+                    callProductDetailActivity();
 
                 }
             });
@@ -334,30 +334,30 @@ public class ProductManagementFragment extends Fragment {
     }
 
 
-    public static String LoadImageFromWebOperations(String url) {
-        try {
-            final int THUMBNAIL_SIZE = 64;
-//            InputStream is = (InputStream) new URL(url).getContent();
-//            Drawable d = Drawable.createFromStream(is, "src name");
-
-            Bitmap thumbImage = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(url), THUMBNAIL_SIZE, THUMBNAIL_SIZE);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            thumbImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
-            byte[] b = baos.toByteArray();
-
-
-            String temp = Base64.encodeToString(b, Base64.DEFAULT);
-            return temp;
-        } catch (Exception e) {
-            return null;
-        }
-    }
+//    public static String LoadImageFromWebOperations(String url) {
+//        try {
+//            final int THUMBNAIL_SIZE = 64;
+////            InputStream is = (InputStream) new URL(url).getContent();
+////            Drawable d = Drawable.createFromStream(is, "src name");
+//
+//            Bitmap thumbImage = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(url), THUMBNAIL_SIZE, THUMBNAIL_SIZE);
+//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//            thumbImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
+//            byte[] b = baos.toByteArray();
+//
+//
+//            String temp = Base64.encodeToString(b, Base64.DEFAULT);
+//            return temp;
+//        } catch (Exception e) {
+//            return null;
+//        }
+//    }
 
 
     private void callProductDetailActivity() {
         Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
 
-//        intent.putExtra("productItem", productItem);
+        intent.putExtra("productItem", productItem);
 
         startActivity(intent);
     }

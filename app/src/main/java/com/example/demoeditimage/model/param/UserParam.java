@@ -8,18 +8,30 @@ public class UserParam {
     private String token;
     private String newPasword;
     private String confirmPassword;
+    private long id;
 
 
-    public UserParam(String username, String phone, String email, String password,String token, String newPasword, String confirmPassword) {
+    public UserParam(String username, String phone, String email, String password, String token, String newPasword, String confirmPassword, long id) {
         this.username = username;
         this.phone = phone;
         this.email = email;
         this.password = password;
         this.token = token;
+        this.newPasword = newPasword;
+        this.confirmPassword = confirmPassword;
+        this.id = id;
     }
 
     public String getToken() {
         return token;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getNewPasword() {

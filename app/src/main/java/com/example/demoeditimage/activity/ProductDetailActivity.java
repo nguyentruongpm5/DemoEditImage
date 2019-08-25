@@ -26,18 +26,19 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.example.demoeditimage.R;
 import com.example.demoeditimage.adapter.ImageProductAdapter;
-import com.example.demoeditimage.adapter.ProductItemAdapter;
+import com.example.demoeditimage.interfaces.RequestAPI;
+import com.example.demoeditimage.model.Product;
 import com.example.demoeditimage.model.ProductImage;
-import com.example.demoeditimage.model.ProductItem;
 import com.example.demoeditimage.phung.CloudinaryConfig;
-import com.example.demoeditimage.phung.model.response.Product;
-import com.example.demoeditimage.phung.testactivity.TestUploadImage;
+import com.example.demoeditimage.request.UpdateItemImgRequest;
+import com.example.demoeditimage.response.UpdateItemImgResponse;
+import com.example.demoeditimage.utils.MyConst;
+import com.example.demoeditimage.utils.RetrofitClient;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,6 +50,10 @@ import java.util.UUID;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
@@ -59,18 +64,26 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     static final int GET_FROM_PHONE_REQUEST_CODE = 888;
 
-    String currentPhotoPath;
+    private String currentPhotoPath;
+
+    private String HOST_URL = MyConst.getHostAddr();
 
     @BindView(R.id.capture_image_layout)
     LinearLayout capture_image_layout;
     private int GALLERY_RESULT = 2;
 
+    List<String> wordList = new ArrayList<>();
 
-    String userId = "1";
-    String shop_id = "2";
-    String productCode = "3";
+
 
     private List<ProductImage> productImageList = new ArrayList<>();
+    private ProductImage productImage;
+
+    private Product product;
+
+    private ImageProductAdapter imageProductAdapter;
+
+
 
     @BindView(R.id.productName_Edt)
     TextInputEditText productName_Edt;
@@ -99,31 +112,29 @@ public class ProductDetailActivity extends AppCompatActivity {
 
 //        productImageList = productItem.getProduct_image_list();
 
-        ProductItem productItem = (ProductItem) getIntent().getSerializableExtra("productItem");
+       product = (Product) getIntent().getSerializableExtra("productItem");
 
-        productName_Edt.setText(productItem.getProduct_name());
+        productName_Edt.setText(product.getName());
 
 
+        wordList.addAll(Arrays.asList(product.getImages()));
 
-        String[] wordList = productItem.getProduct_image_list();
-
-        for (String urlLink : wordList){
-            ProductImage productImage = new ProductImage();
+        for (String urlLink : wordList) {
+            productImage = new ProductImage();
             productImage.setImageUrl(urlLink);
             productImageList.add(productImage);
         }
 
 
-        skuCode_Edt.setText(productItem.getProduct_sku());
+        skuCode_Edt.setText(product.getItem_sku());
 
-        ImageProductAdapter imageProductAdapter = new ImageProductAdapter(productImageList);
+        imageProductAdapter = new ImageProductAdapter(productImageList);
 
         rclImage.setAdapter(imageProductAdapter);
 
         imageProductAdapter.notifyDataSetChanged();
 
     }
-
 
 
     @OnClick(R.id.btnBack)
@@ -136,6 +147,53 @@ public class ProductDetailActivity extends AppCompatActivity {
         showDialog();
     }
 
+    @OnClick(R.id.btnUpdateItemImg)
+    void clickToupdateItemImg() {
+        updateItemImg();
+    }
+
+    private void updateItemImg() {
+        HOST_URL = MyConst.getHostAddr();
+        Retrofit retrofit = RetrofitClient.getClient(HOST_URL);
+        RequestAPI callApi = retrofit.create(RequestAPI.class);
+        String authorization = MyConst.getJwtToken();
+
+
+
+        List<String> images = new ArrayList<>();
+
+        for (ProductImage productImage1 : productImageList){
+            images.add(productImage1.getImageUrl());
+        }
+
+
+        long item_id = product.getItem_id();
+        long partner_id = MyConst.partner_id;
+        long shopid = product.getShopid();
+
+        callApi.updateItemImg(authorization, new UpdateItemImgRequest(item_id,images, partner_id, shopid)).enqueue(new Callback<UpdateItemImgResponse>() {
+            @Override
+            public void onResponse(Call<UpdateItemImgResponse> call, Response<UpdateItemImgResponse> response) {
+                if (response.isSuccessful()) {
+                    assert response.body() != null;
+                    String msg = response.body().getMsg();
+                    if (msg == null || !(msg.equals("Update item image success") || msg.equals("Nothing change for images"))) {
+//                        tvStatus.setText("Updated failed!");
+                        Toast.makeText(ProductDetailActivity.this, "Updated failed!" + "\n" + msg, Toast.LENGTH_SHORT).show();
+                    } else {
+//                        tvStatus.setText("Update successfully!");
+                        Toast.makeText(ProductDetailActivity.this, "Update successfully!" + "\n" + msg, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateItemImgResponse> call, Throwable t) {
+                Toast.makeText(ProductDetailActivity.this, "Call API failed", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+            }
+        });
+    }
 
 
     private void showDialog() {
@@ -150,8 +208,11 @@ public class ProductDetailActivity extends AppCompatActivity {
                         // of the selected item
                         switch (which) {
                             case 0:
-                                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                    String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                                    requestPermissions(permissions, WRITE_REQUEST_CODE);
+                                }
+                                takePictureFromPhone();
                                 break;
                             case 1:
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -168,6 +229,11 @@ public class ProductDetailActivity extends AppCompatActivity {
                 });
         builder.setPositiveButton("Hủy", null);
         builder.create().show();
+    }
+
+    private void takePictureFromPhone() {
+        Intent getPictureIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(getPictureIntent, GET_FROM_PHONE_REQUEST_CODE);
     }
 
     private void dispatchTakePictureIntent() {
@@ -213,23 +279,31 @@ public class ProductDetailActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-
+        long userId = MyConst.getUserid();
+        long productCode = product.getItem_id();
+        long shopid = product.getShopid();
         if (requestCode == REQUEST_IMAGE_CAPTURE) {
             if (resultCode == RESULT_OK) {
                 String id = UUID.randomUUID().toString().replace("-", "");
-                new ProductDetailActivity.UploadToCloud().execute(userId,shop_id,productCode, id);
+
+
+
+                new ProductDetailActivity.UploadToCloud().execute(String.valueOf(userId), String.valueOf(shopid), String.valueOf(productCode), id);
 
             } else if (resultCode == RESULT_CANCELED) {
                 // User cancelled the image capture
                 //finish();
             }
-        } else if (requestCode == GET_FROM_PHONE_REQUEST_CODE ) {
+        } else if (requestCode == GET_FROM_PHONE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Uri selectedImgUri = data.getData();
                 currentPhotoPath = getRealPathFromURI(selectedImgUri);
 
                 String id = UUID.randomUUID().toString().replace("-", "");
-                new ProductDetailActivity.UploadToCloud().execute(userId,shop_id,productCode, id);
+
+
+
+                new ProductDetailActivity.UploadToCloud().execute(String.valueOf(userId), String.valueOf(shopid), String.valueOf(productCode), id);
 
             } else {
 
@@ -254,6 +328,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private class UploadToCloud extends AsyncTask<String, Void, Void> {
         String img_url = null;
+
         @Override
         protected Void doInBackground(String... params) {
             //File to upload to cloudinary
@@ -290,13 +365,15 @@ public class ProductDetailActivity extends AppCompatActivity {
             if (img_url == null) {
                 return;
             }
-            Toast.makeText(ProductDetailActivity.this,"Upload completed!",Toast.LENGTH_LONG).show();
-            Picasso.get()
-                    .load(img_url)
-                    .placeholder(R.mipmap.placeholder_images)
-                    .error(R.drawable.ic_error_black_24dp)
-//                    .fit()
-                    /*.into(ivImage)*/;
+
+            ProductImage productImage1 = new ProductImage(img_url);
+            productImageList.add(productImage1);
+//            productImage1.setImageUrl(img_url);
+
+            imageProductAdapter.notifyDataSetChanged();
+//            productImageList.add(productImage);
+
+            Toast.makeText(ProductDetailActivity.this, "Thêm ảnh thành công ! ", Toast.LENGTH_SHORT).show();
         }
     }
 }

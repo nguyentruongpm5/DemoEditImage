@@ -28,8 +28,8 @@ import com.example.demoeditimage.interfaces.RequestAPI;
 import com.example.demoeditimage.model.ProductItem;
 import com.example.demoeditimage.model.ShopInfo.ShopInfo;
 import com.example.demoeditimage.model.ShopInfo.ShopInfoOverview;
-import com.example.demoeditimage.phung.utils.APIClient;
 import com.example.demoeditimage.utils.MyConst;
+import com.example.demoeditimage.utils.RetrofitClient;
 
 
 import java.text.DateFormat;
@@ -135,7 +135,7 @@ public class OverviewStoreFragment extends Fragment {
     private void getShops() {
         HOST_URL = MyConst.getHostAddr();
 
-        Retrofit retrofit  = APIClient.getClient(HOST_URL);
+        Retrofit retrofit  = RetrofitClient.getClient(HOST_URL);
         RequestAPI callApi = retrofit.create(RequestAPI.class);
 
         String authorization = MyConst.getJwtToken();
