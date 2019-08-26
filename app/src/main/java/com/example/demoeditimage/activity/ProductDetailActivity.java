@@ -19,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -37,6 +38,8 @@ import com.example.demoeditimage.utils.RetrofitClient;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
@@ -57,8 +60,6 @@ import retrofit2.Retrofit;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
-    //    private static final int MY_CAMERA_PERMISSION_CODE = 100 ;
-    private static final int CAMERA_REQUEST = 52;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int WRITE_REQUEST_CODE = 888;
 
@@ -70,11 +71,8 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     @BindView(R.id.capture_image_layout)
     LinearLayout capture_image_layout;
-    private int GALLERY_RESULT = 2;
 
     List<String> wordList = new ArrayList<>();
-
-
 
     private List<ProductImage> productImageList = new ArrayList<>();
     private ProductImage productImage;
@@ -82,8 +80,6 @@ public class ProductDetailActivity extends AppCompatActivity {
     private Product product;
 
     private ImageProductAdapter imageProductAdapter;
-
-
 
     @BindView(R.id.productName_Edt)
     TextInputEditText productName_Edt;
@@ -110,9 +106,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         rclImage.setLayoutManager(layoutManager);
 
-//        productImageList = productItem.getProduct_image_list();
-
-       product = (Product) getIntent().getSerializableExtra("productItem");
+        product = (Product) getIntent().getSerializableExtra("productItem");
 
         productName_Edt.setText(product.getName());
 
@@ -125,7 +119,6 @@ public class ProductDetailActivity extends AppCompatActivity {
             productImageList.add(productImage);
         }
 
-
         skuCode_Edt.setText(product.getItem_sku());
 
         imageProductAdapter = new ImageProductAdapter(productImageList);
@@ -135,7 +128,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         imageProductAdapter.notifyDataSetChanged();
 
     }
-
 
     @OnClick(R.id.btnBack)
     void clickToBack() {
@@ -153,35 +145,30 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     private void updateItemImg() {
-        HOST_URL = MyConst.getHostAddr();
         Retrofit retrofit = RetrofitClient.getClient(HOST_URL);
         RequestAPI callApi = retrofit.create(RequestAPI.class);
         String authorization = MyConst.getJwtToken();
 
 
-
         List<String> images = new ArrayList<>();
 
-        for (ProductImage productImage1 : productImageList){
+        for (ProductImage productImage1 : productImageList) {
             images.add(productImage1.getImageUrl());
         }
-
 
         long item_id = product.getItem_id();
         long partner_id = MyConst.partner_id;
         long shopid = product.getShopid();
 
-        callApi.updateItemImg(authorization, new UpdateItemImgRequest(item_id,images, partner_id, shopid)).enqueue(new Callback<UpdateItemImgResponse>() {
+        callApi.updateItemImg(authorization, new UpdateItemImgRequest(item_id, images, partner_id, shopid)).enqueue(new Callback<UpdateItemImgResponse>() {
             @Override
             public void onResponse(Call<UpdateItemImgResponse> call, Response<UpdateItemImgResponse> response) {
                 if (response.isSuccessful()) {
                     assert response.body() != null;
                     String msg = response.body().getMsg();
                     if (msg == null || !(msg.equals("Update item image success") || msg.equals("Nothing change for images"))) {
-//                        tvStatus.setText("Updated failed!");
                         Toast.makeText(ProductDetailActivity.this, "Updated failed!" + "\n" + msg, Toast.LENGTH_SHORT).show();
                     } else {
-//                        tvStatus.setText("Update successfully!");
                         Toast.makeText(ProductDetailActivity.this, "Update successfully!" + "\n" + msg, Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -212,14 +199,14 @@ public class ProductDetailActivity extends AppCompatActivity {
                                     String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
                                     requestPermissions(permissions, WRITE_REQUEST_CODE);
                                 }
-                                takePictureFromPhone();
+                                dispatchTakePictureIntent();
                                 break;
                             case 1:
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                     String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
                                     requestPermissions(permissions, WRITE_REQUEST_CODE);
                                 }
-                                dispatchTakePictureIntent();
+                                takePictureFromPhone();
                                 break;
                             case 2:
                                 Toast.makeText(getBaseContext(), "clicked 3", Toast.LENGTH_SHORT).show();
@@ -265,13 +252,14 @@ public class ProductDetailActivity extends AppCompatActivity {
                     ".jpg",         /* suffix */
                     storageDir      /* directory */
             );
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
-        Uri uri = Uri.fromFile(image);
+
         return image;
     }
 
@@ -286,8 +274,6 @@ public class ProductDetailActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 String id = UUID.randomUUID().toString().replace("-", "");
 
-
-
                 new ProductDetailActivity.UploadToCloud().execute(String.valueOf(userId), String.valueOf(shopid), String.valueOf(productCode), id);
 
             } else if (resultCode == RESULT_CANCELED) {
@@ -300,8 +286,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                 currentPhotoPath = getRealPathFromURI(selectedImgUri);
 
                 String id = UUID.randomUUID().toString().replace("-", "");
-
-
 
                 new ProductDetailActivity.UploadToCloud().execute(String.valueOf(userId), String.valueOf(shopid), String.valueOf(productCode), id);
 
@@ -324,7 +308,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         }
         return result;
     }
-
 
     private class UploadToCloud extends AsyncTask<String, Void, Void> {
         String img_url = null;
@@ -371,9 +354,53 @@ public class ProductDetailActivity extends AppCompatActivity {
 //            productImage1.setImageUrl(img_url);
 
             imageProductAdapter.notifyDataSetChanged();
-//            productImageList.add(productImage);
+
 
             Toast.makeText(ProductDetailActivity.this, "Thêm ảnh thành công ! ", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    public File saveBitmapToFile(File file){
+        try {
+
+            // BitmapFactory options to downsize the image
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            o.inSampleSize = 6;
+            // factor of downsizing the image
+
+            FileInputStream inputStream = new FileInputStream(file);
+            //Bitmap selectedBitmap = null;
+            BitmapFactory.decodeStream(inputStream, null, o);
+            inputStream.close();
+
+            // The new size we want to scale to
+            final int REQUIRED_SIZE=75;
+
+            // Find the correct scale value. It should be the power of 2.
+            int scale = 1;
+            while(o.outWidth / scale / 2 >= REQUIRED_SIZE &&
+                    o.outHeight / scale / 2 >= REQUIRED_SIZE) {
+                scale *= 2;
+            }
+
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize = scale;
+            inputStream = new FileInputStream(file);
+
+            Bitmap selectedBitmap = BitmapFactory.decodeStream(inputStream, null, o2);
+            inputStream.close();
+
+            // here i override the original image file
+            file.createNewFile();
+            FileOutputStream outputStream = new FileOutputStream(file);
+
+            selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 100 , outputStream);
+
+            return file;
+        } catch (Exception e) {
+            return null;
         }
     }
 }

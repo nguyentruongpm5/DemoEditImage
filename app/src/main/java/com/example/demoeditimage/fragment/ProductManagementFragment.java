@@ -1,22 +1,17 @@
 package com.example.demoeditimage.fragment;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.ThumbnailUtils;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -24,16 +19,11 @@ import com.example.demoeditimage.R;
 import com.example.demoeditimage.activity.AddProductActivity;
 import com.example.demoeditimage.activity.ProductDetailActivity;
 import com.example.demoeditimage.adapter.ProductItemAdapter;
-import com.example.demoeditimage.adapter.ShopInfoAdapter;
 import com.example.demoeditimage.adapter.StoreAdapter;
-import com.example.demoeditimage.interfaces.CallLocalAPI;
 import com.example.demoeditimage.interfaces.CallProductlDetailListener;
-import com.example.demoeditimage.interfaces.CallShopDetailListener;
 import com.example.demoeditimage.interfaces.RequestAPI;
 import com.example.demoeditimage.model.GetItemListResponse;
 import com.example.demoeditimage.model.Product;
-import com.example.demoeditimage.model.ProductImage;
-import com.example.demoeditimage.model.ProductItem;
 import com.example.demoeditimage.model.ShopInfo.ShopInfo;
 
 
@@ -41,7 +31,6 @@ import com.example.demoeditimage.response.GetItemDetailResponse;
 import com.example.demoeditimage.utils.MyConst;
 import com.example.demoeditimage.utils.RetrofitClient;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,19 +55,16 @@ public class ProductManagementFragment extends Fragment {
     @BindView(R.id.spnStoreName)
     Spinner spnStoreName;
 
+    private ProgressDialog loadingbar;
+
     private Boolean more;
 
     private int offset;
 
     private long shopId;
 
-    private List<ProductItem> productItemList = new ArrayList<>();
-
-    private GetItemListResponse getItemListResponseList;
-
     private List<Product> mProducts = new ArrayList<>();
 
-    private ShopInfoAdapter shopInfoAdapter;
 
     private List<ShopInfo> shopInfoList = new ArrayList<>();
 //    private ProductItem productItem;
@@ -90,7 +76,6 @@ public class ProductManagementFragment extends Fragment {
 
     private ProductItemAdapter productItemAdapter;
 
-    private RetrofitClient retrofitClient = new RetrofitClient();
 
     public ProductManagementFragment() {
         // Required empty public constructor
@@ -109,43 +94,34 @@ public class ProductManagementFragment extends Fragment {
 
         productDetailItem();
 
-        // lấy danh sách sản phẩm
-        getProducts();
+        // chờ dữ liệu tải về
+        loadingBarProcess();
+
+//        // lấy danh sách sản phẩm
+//        getProducts();
 
 
         // gán dữ liẹu cho spinner
         getStoreList();
 
+
+        // lấy danh sách gian hàng
         getShopList();
 
-//        getAllItems(shopId);
-
-//        productItemList.add(new ProductItem(1, "husky", "SKU1",
-//                "Cập nhật thành công", null, null,
-//                new String[]{"https://gamepedia.cursecdn.com/lolesports_gamepedia_en/d/d5/LNG_Esportslogo_square.png",
-//                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwl4vk1O61TsNOfjTY1DjpmnKbNHT0xVH3an1hEjp7JeSDTkIp",
-//                        "https://www.nestle.com.au/sites/g/files/pydnoa356/files/asset-library/publishingimages/miloarticle.jpg"},
-//                null, 0, 0, 0, 0, 0));
-//        productItemList.add(new ProductItem(2, "Doraemon", "SKU2",
-//                "Cập nhật thành công", null, null,
-//                new String[]{"https://gamepedia.cursecdn.com/lolesports_gamepedia_en/d/d5/LNG_Esportslogo_square.png",
-//                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwl4vk1O61TsNOfjTY1DjpmnKbNHT0xVH3an1hEjp7JeSDTkIp",
-//                        "https://www.nestle.com.au/sites/g/files/pydnoa356/files/asset-library/publishingimages/miloarticle.jpg"},
-//                null, 0, 0, 0, 0, 0));
-//
-//        productItemList.add(new ProductItem(3, "Sapo", "SKU3",
-//                "Cập nhật thành công", null, null,
-//                new String[]{"https://gamepedia.cursecdn.com/lolesports_gamepedia_en/d/d5/LNG_Esportslogo_square.png",
-//                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwl4vk1O61TsNOfjTY1DjpmnKbNHT0xVH3an1hEjp7JeSDTkIp",
-//                        "https://www.nestle.com.au/sites/g/files/pydnoa356/files/asset-library/publishingimages/miloarticle.jpg"},
-//                null, 0, 0, 0, 0, 0));
-
-//        String json = new Gson().toJson(productItem);
 
         return view;
     }
 
+    private void loadingBarProcess() {
+        loadingbar = new ProgressDialog(getActivity());
+        loadingbar.setMessage("Đang tải dữ liệu...");
+        loadingbar.show();
+        loadingbar.setCancelable(false);
+        loadingbar.setCanceledOnTouchOutside(false);
+    }
+
     private void getAllItems() {
+        loadingbar.show();
         mProducts.clear();
         more = true;
         offset = 0;
@@ -154,7 +130,6 @@ public class ProductManagementFragment extends Fragment {
     }
 
     private void getItemList(final int entries) {
-//        int i = 0;
 
         HOST_URL = MyConst.getHostAddr();
 
@@ -179,8 +154,6 @@ public class ProductManagementFragment extends Fragment {
                     if (more) {
                         getItemList(entries);
                     } else {
-//                            tvStatus.setText("Get Item List successfully: " + mProducts.size());
-                        Toast.makeText(getActivity(), "Get shops successfully" + "\n" + mProducts.size(), Toast.LENGTH_SHORT).show();
                         productItemAdapter.notifyDataSetChanged();
                         getItemDetails();
                     }
@@ -198,8 +171,6 @@ public class ProductManagementFragment extends Fragment {
     }
 
     private void getItemDetails() {
-        HOST_URL = MyConst.getHostAddr();
-
         Retrofit retrofit = RetrofitClient.getClient(HOST_URL);
         RequestAPI callApi = retrofit.create(RequestAPI.class);
 
@@ -216,6 +187,7 @@ public class ProductManagementFragment extends Fragment {
                         product.setImages(response.body().getItem().getImages());
                         mProducts.set(finalI, product);
                         productItemAdapter.notifyDataSetChanged();
+                        loadingbar.cancel();
                     }
                 }
 
@@ -227,9 +199,7 @@ public class ProductManagementFragment extends Fragment {
         }
     }
 
-
     private void getShopList() {
-        HOST_URL = MyConst.getHostAddr();
 
         Retrofit retrofit = RetrofitClient.getClient(HOST_URL);
         RequestAPI callApi = retrofit.create(RequestAPI.class);
@@ -242,16 +212,9 @@ public class ProductManagementFragment extends Fragment {
                 if (response.isSuccessful()) {
                     shopInfoList.clear();
                     shopInfoList.addAll(response.body());
-
                     storeAdapter.notifyDataSetChanged();
-//                    DateFormat simple = new SimpleDateFormat("dd MMM yyyy HH:mm:ss:SSS Z");
-//                    Date date = new Date(shopList.get(0).getCreateDate());
-//                    Log.d("TestCallAPI",simple.format(date));
-//                    tvStatus.setText("Get shops successfully: " + mShops.size());
 
-                    Toast.makeText(getActivity(), "Get shops successfully" + "\n" + shopInfoList.size(), Toast.LENGTH_SHORT).show();
                 } else {
-//                    tvStatus.setText("Failed: " + mShops.size());
                     Toast.makeText(getActivity(), "Something happened, cannot connect to the server", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -289,74 +252,44 @@ public class ProductManagementFragment extends Fragment {
                 @Override
                 public void itemProductClick(int position) {
                     productItem = mProducts.get(position);
-                    Toast.makeText(getActivity(), "ahii", Toast.LENGTH_SHORT).show();
                     callProductDetailActivity();
 
                 }
             });
             rclProductList.setAdapter(productItemAdapter);
-
             productItemAdapter.notifyDataSetChanged();
+
         }
     }
 
-    private void getProducts() {
-//        Map<String,String> parameter = new HashMap<>();
-//        parameter.put("product_id","1");
-
-
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl(CallLocalAPI.BASE_URL_local)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
+//    private void getProducts() {
+//        HOST_URL = MyConst.getHostAddr();
 //
-//        CallLocalAPI api = retrofit.create(CallLocalAPI.class);
-
-        CallLocalAPI api = retrofitClient.getCallLocalAPI();
-
-        Call<List<ProductItem>> call = api.getProducts();
-        call.enqueue(new Callback<List<ProductItem>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<ProductItem>> call, @NonNull Response<List<ProductItem>> response) {
-                if (!response.isSuccessful()) {
+//        Retrofit retrofit = RetrofitClient.getClient(HOST_URL);
+//        RequestAPI callApi = retrofit.create(RequestAPI.class);
+//
+//        callApi.getProducts().enqueue(new Callback<List<Product>>() {
+//            @Override
+//            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+//                if (!response.isSuccessful()) {
 //                    Toast.makeText(getActivity(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
-                } else {
-                    productItemList.clear();
-                    productItemList.addAll(response.body());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<List<ProductItem>> call, @NonNull Throwable t) {
-                Toast.makeText(getActivity(), "Mất kết nối", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//                } else {
+//                    productItemList.clear();
+////                    productItemList.addAll(response.body());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Product>> call, Throwable t) {
+//                Toast.makeText(getActivity(), "Mất kết nối", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
     @OnClick(R.id.addProductBtn)
     void clickToAddProduct() {
         callAddProductActivity();
     }
-
-
-//    public static String LoadImageFromWebOperations(String url) {
-//        try {
-//            final int THUMBNAIL_SIZE = 64;
-////            InputStream is = (InputStream) new URL(url).getContent();
-////            Drawable d = Drawable.createFromStream(is, "src name");
-//
-//            Bitmap thumbImage = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(url), THUMBNAIL_SIZE, THUMBNAIL_SIZE);
-//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//            thumbImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
-//            byte[] b = baos.toByteArray();
-//
-//
-//            String temp = Base64.encodeToString(b, Base64.DEFAULT);
-//            return temp;
-//        } catch (Exception e) {
-//            return null;
-//        }
-//    }
 
 
     private void callProductDetailActivity() {

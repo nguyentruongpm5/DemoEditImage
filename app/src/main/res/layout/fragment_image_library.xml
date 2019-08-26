@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    tools:context=".fragment.ProductManagementFragment">
+    tools:context=".fragment.ImageLibraryFragment"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +33,7 @@
                 android:layout_height="wrap_content"
 
                 android:layout_gravity="center"
-                android:text="Sản phẩm"
+                android:text="Thư viện ảnh"
                 android:textColor="@color/backgroundColor"
                 android:textSize="20dp" />
 
@@ -45,33 +44,13 @@
             style="@style/SaveButton"
             android:layout_weight="1"
             android:minHeight="?attr/actionBarSize"
-            android:src="@drawable/ic_search_black_32dp" />
+            android:src="@drawable/ic_arrow_back_blue_30dp" />
     </LinearLayout>
-
-
-    <Spinner
-        android:id="@+id/spnStoreName"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/bg_spinner"
-        android:layout_marginStart="2dp"
-        android:layout_marginEnd="2dp"/>
-    <ProgressBar
-        android:id="@+id/progress"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:visibility="gone" />
-
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rclProductList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
         android:layout_marginBottom="55dp">
 
-
     </android.support.v7.widget.RecyclerView>
-
 
 </LinearLayout>

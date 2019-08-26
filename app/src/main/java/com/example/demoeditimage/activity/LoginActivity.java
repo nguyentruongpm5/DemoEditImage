@@ -68,7 +68,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-
     }
 
     @OnTextChanged(value = R.id.unameEdt, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -109,6 +108,8 @@ public class LoginActivity extends AppCompatActivity {
         String password = passwordEdt.getText().toString().trim();
 
         final Map<String, Object> user = new HashMap<>();
+
+        //hello@gmail.com (123456)
         user.put("email", "hello@gmail.com");
         user.put("password", "123456");
 
@@ -126,18 +127,16 @@ public class LoginActivity extends AppCompatActivity {
                     MyConst.setUserid(userParam.getId());
                     Toast.makeText(getApplicationContext(), "Đăng nhập thành công !!", Toast.LENGTH_SHORT).show();
                     callOverviewStoreActivity();
-                } else if (response.code() == 401)
+                } else
                     Toast.makeText(getApplicationContext(), "Sai tài khoản hoặc mật khẩu !!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<UserParam> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "network failure :( inform the user and possibly retry", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Mất kết nối Internet", Toast.LENGTH_SHORT).show();
 
             }
         });
-
-
 
     }
 

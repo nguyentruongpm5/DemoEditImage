@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.example.demoeditimage.R;
+import com.example.demoeditimage.fragment.ImageLibraryFragment;
 import com.example.demoeditimage.fragment.MoreOptionsFragment;
 import com.example.demoeditimage.fragment.OverviewStoreFragment;
 import com.example.demoeditimage.fragment.ProductManagementFragment;
@@ -50,7 +51,7 @@ public class OverviewStoreActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.images_library:
-//                        setFragment(new ProfileFragment());
+                        setFragment(new ImageLibraryFragment());
                         return true;
 
                     case R.id.moreAction:

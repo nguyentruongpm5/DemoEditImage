@@ -1,6 +1,8 @@
 package com.example.demoeditimage.interfaces;
 
 import com.example.demoeditimage.model.GetItemListResponse;
+import com.example.demoeditimage.model.Product;
+import com.example.demoeditimage.model.ProductItem;
 import com.example.demoeditimage.model.ShopInfo.ShopInfo;
 import com.example.demoeditimage.model.User;
 import com.example.demoeditimage.model.param.UserParam;
@@ -29,6 +31,8 @@ public interface RequestAPI {
     @POST("user/user/changepassword")
     Call<User> changePassword(@Body UserParam userParam);
 
+    @POST("product")
+    Call<List<Product>> getProducts();
 
     @GET("shop")
     Call<List<ShopInfo>> getShops(@Header("Authorization") String token);

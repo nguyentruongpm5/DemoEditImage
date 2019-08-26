@@ -1,5 +1,6 @@
 package com.example.demoeditimage.adapter;
 
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -14,11 +15,7 @@ import android.widget.ImageView;
 import com.example.demoeditimage.R;
 import com.example.demoeditimage.model.ProductImage;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,7 +24,8 @@ import butterknife.ButterKnife;
 public class ImageProductAdapter extends RecyclerView.Adapter<ImageProductAdapter.ViewHolder> {
 
 
-    List<ProductImage> productImages = new ArrayList<>();
+    List<ProductImage> productImages;
+    private ProgressDialog loadingbar;
 
     public ImageProductAdapter(List<ProductImage> productImages) {
         this.productImages = productImages;
