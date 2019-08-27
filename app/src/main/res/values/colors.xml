@@ -7,7 +7,8 @@
     <color name="price_txt">#aea9a9</color>
     <color name="hint_edt">#bfbfbf</color>
     <color name="Warning_TextView">#FF0000</color>
-    <color name="backgroundColor">#ffffff</color>
+    <color name="white">#ffffff</color>
+    <color name="backgroundColor">#f6f7fb</color>
     <color name="btn_search_product">#A1A1BB</color>
     <color name="txt_signup">#0089FF</color>
     <color name="colorGray">#808080</color>

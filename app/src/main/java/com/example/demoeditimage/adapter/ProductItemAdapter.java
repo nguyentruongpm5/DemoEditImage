@@ -3,6 +3,11 @@ package com.example.demoeditimage.adapter;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.SpannableStringBuilder;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.URLSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,19 +54,19 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
 
         switch (product.getStatus()) {
             case "NORMAL":
-                viewHolder.txtStatus.setTextColor(Color.rgb(0, 153, 51));
+                viewHolder.txtStatus.setTextColor(Color.rgb(43, 169, 46));
                 viewHolder.txtStatus.setText("Hiển thị");
                 break;
             case "DELETED":
-                viewHolder.txtStatus.setTextColor(Color.rgb(0, 137, 255));
+                viewHolder.txtStatus.setTextColor(Color.RED);
                 viewHolder.txtStatus.setText("Đã xóa");
                 break;
             case "BANNED":
-                viewHolder.txtStatus.setTextColor(Color.RED);
+                viewHolder.txtStatus.setTextColor(Color.rgb(255, 107, 0));
                 viewHolder.txtStatus.setText("Khóa");
                 break;
             case "UNLIST":
-                viewHolder.txtStatus.setTextColor(Color.GRAY);
+                viewHolder.txtStatus.setTextColor(Color.rgb(123, 123, 123));
                 viewHolder.txtStatus.setText("Ẩn");
                 break;
         }
@@ -85,7 +90,7 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
 
     @Override
     public int getItemCount() {
-        return productItemList.size();
+        return productItemList ==  null ? 0 : productItemList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

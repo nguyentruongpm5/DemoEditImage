@@ -95,23 +95,8 @@ public class OverviewStoreFragment extends Fragment {
 
                     final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 
-                    alert.setMessage("Bạn có muốn xóa gian hàng này không ?");
-                    alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
+                    alert.setMessage("Đây là gian hàng thứ :" +position);
 
-                            shopList.remove(shopList.get(position));
-                            shopInfoAdapter.notifyDataSetChanged();
-                            Toast.makeText(getActivity(), "Xóa thành công!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                    alert.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-
-                        }
-                    });
-
-                    alert.show();
                 }
             });
             rclShopList.setAdapter(shopInfoAdapter);
@@ -122,21 +107,10 @@ public class OverviewStoreFragment extends Fragment {
         }
 
 
-//        shopInfoOverviews.add(new ShopInfoOverview("baotrang",null,
-//                "Đã cập nhật","shopee.vn/baotrang99"));
-//        shopInfoOverviews.add(new ShopInfoOverview("shopee",null,
-//                "Đã cập nhật","shopee.vn/126468"));
-//
-//        shopInfoOverviews.add(new ShopInfoOverview("abc",null,
-//                "Đã cập nhật","shopee.vn/126468"));
-
-//        shopInfoOverviews.removeAll(shopInfoOverviews);
         return view;
     }
 
     private void getShops() {
-        HOST_URL = MyConst.getHostAddr();
-
         Retrofit retrofit  = RetrofitClient.getClient(HOST_URL);
         RequestAPI callApi = retrofit.create(RequestAPI.class);
 
@@ -155,7 +129,7 @@ public class OverviewStoreFragment extends Fragment {
 //                    Log.d("TestCallAPI",simple.format(date));
 //                    tvStatus.setText("Get shops successfully: " + mShops.size());
 
-                    Toast.makeText(getActivity(), "Get shops successfully" + "\n" + shopList.size(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "Get shops successfully" + "\n" + shopList.size(), Toast.LENGTH_SHORT).show();
                     getShopAvatar();
                 } else {
 //                    tvStatus.setText("Failed: " + mShops.size());
@@ -172,7 +146,6 @@ public class OverviewStoreFragment extends Fragment {
     }
 
     private void getShopAvatar() {
-        HOST_URL = MyConst.getHostAddr();
         Retrofit retrofit  = RetrofitClient.getClient(HOST_URL);
         RequestAPI callApi = retrofit.create(RequestAPI.class);
         String authorization = MyConst.getJwtToken();
@@ -204,35 +177,6 @@ public class OverviewStoreFragment extends Fragment {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @OnClick(R.id.addStoreBtn)
-    void addStore (){
-        final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-
-        alert.setMessage("Thêm gian hàng");
-
-        View alertLayout =  View.inflate(getActivity(),R.layout.edt_addstore,null);
-        alert.setView(alertLayout);
-        final TextInputEditText edit = alertLayout.findViewById(R.id.storeNameEdt);
-        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-
-                String shopName = edit.getText().toString();
-                shopInfoOverviews.add(new ShopInfoOverview(shopName,null,null,null));
-                Toast.makeText(getContext(), "Tên gian hàng vừa thêm: " + shopName, Toast.LENGTH_SHORT).show();
-
-                shopInfoAdapter.notifyDataSetChanged();
-            }
-        });
-
-        alert.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // what ever you want to do with No option.
-            }
-        });
-
-        alert.show();
-    }
 
     @Override
     public void onResume() {

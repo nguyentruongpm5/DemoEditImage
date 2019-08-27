@@ -1,8 +1,8 @@
 package com.example.demoeditimage.adapter;
 
-import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -21,13 +21,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ImageProductAdapter extends RecyclerView.Adapter<ImageProductAdapter.ViewHolder> {
-
+public class ImageLibraryAdapter extends RecyclerView.Adapter<ImageLibraryAdapter.ViewHolder> {
 
     List<ProductImage> productImages;
-    private ProgressDialog loadingbar;
 
-    public ImageProductAdapter(List<ProductImage> productImages) {
+    public ImageLibraryAdapter(List<ProductImage> productImages) {
         this.productImages = productImages;
     }
 
@@ -35,20 +33,28 @@ public class ImageProductAdapter extends RecyclerView.Adapter<ImageProductAdapte
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.content_item_image,viewGroup, false);
+                .inflate(R.layout.content_item_img_library,viewGroup, false);
 
         ViewHolder vh = new ViewHolder(itemView);
 
         return vh;
-
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        ProductImage productImage = productImages.get(i);
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
+        final ProductImage productImage = productImages.get(i);
 
-        new DownloadImageTask(viewHolder.imgItemProduct).execute(productImage.getImageUrl());
+        new ImageLibraryAdapter.DownloadImageTask(viewHolder.imgItemProduct).execute(productImage.getImageUrl());
 
+        viewHolder.imgItemProduct.setBackgroundColor(productImage.isSelected()? Color.CYAN : Color.WHITE);
+
+        viewHolder.imgItemProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                productImage.setSelected(!productImage.isSelected());
+                viewHolder.imgItemProduct.setBackgroundColor(productImage.isSelected() ? Color.CYAN : Color.WHITE);
+            }
+        });
     }
 
     @Override

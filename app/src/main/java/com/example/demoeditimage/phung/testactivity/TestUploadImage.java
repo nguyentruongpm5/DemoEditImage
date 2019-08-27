@@ -116,6 +116,7 @@ public class TestUploadImage extends AppCompatActivity {
         } else if (requestCode == GET_FROM_PHONE_REQUEST_CODE ) {
             if (resultCode == RESULT_OK) {
                 Uri selectedImgUri = data.getData();
+
                 currentPhotoPath = getRealPathFromURI(selectedImgUri);
 
                 String id = UUID.randomUUID().toString().replace("-", "");
@@ -182,8 +183,8 @@ public class TestUploadImage extends AppCompatActivity {
         );
 
         // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
-        Uri uri = Uri.fromFile(image);
+//        currentPhotoPath = image.getAbsolutePath();
+//        Uri uri = Uri.fromFile(image);
         return image;
     }
 

@@ -73,7 +73,7 @@
         <item name="android:textColor">@color/btn_search_product</item>
         <item name="android:maxLines">1</item>
         <item name="android:text">@string/btn_search_product</item>
-        <item name="android:background">@color/backgroundColor</item>
+        <item name="android:background">@color/white</item>
         <item name="android:textAllCaps">false</item>
     </style>
 
@@ -93,7 +93,7 @@
     <style name="BackButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/backgroundColor</item>
+        <item name="android:background">@color/white</item>
         <item name="android:padding">12dp</item>
         <item name="android:src">@drawable/ic_arrow_back_black_30dp</item>
     </style>
@@ -109,7 +109,7 @@
     <style name="BackButton3">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/txt_signup</item>
+        <item name="android:background">@color/white</item>
         <item name="android:padding">12dp</item>
         <item name="android:src">@drawable/ic_add_black_24dp</item>
     </style>
@@ -117,7 +117,7 @@
     <style name="SaveButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/txt_signup</item>
+        <item name="android:background">@color/white</item>
         <item name="android:padding">12dp</item>
         <item name="android:src">@drawable/ic_check_white_30dp</item>
     </style>
@@ -129,10 +129,10 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginRight">20dp</item>
         <item name="android:layout_marginLeft">20dp</item>
-        <item name="android:background">@drawable/selector_submit</item>
+        <item name="android:background">@drawable/button_state_list_animator</item>
         <item name="android:text">@string/log_in</item>
         <item name="android:textSize">@dimen/login_edt_text_size</item>
-        <item name="android:textColor">@color/backgroundColor</item>
+        <item name="android:textColor">@color/button_text_color</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:focusable">true</item>
     </style>
@@ -156,7 +156,7 @@
         <item name="android:layout_marginLeft">20dp</item>
         <item name="android:background">@drawable/selector_submit</item>
         <item name="android:text">Kết nối gian hàng</item>
-        <item name="android:textColor">@color/backgroundColor</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textAllCaps">false</item>
     </style>
 
@@ -179,7 +179,7 @@
         <item name="android:textColor">@color/colorBlack</item>
         <item name="android:maxLines">1</item>
         <item name="android:text">@string/txt_productList</item>
-        <item name="android:background">@color/backgroundColor</item>
+        <item name="android:background">@color/white</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:gravity">center</item>
     </style>
@@ -232,13 +232,13 @@
 
     <style name="Theme.App.Base0" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorControlNormal">@color/colorGray</item>
-        <item name="colorControlHighlight">@color/backgroundColor</item>
+        <item name="colorControlHighlight">@color/white</item>
     </style>
 
     <style name="Theme.App.Base1" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorControlNormal">@color/colorGray</item>
         <item name="colorControlActivated">@color/txt_signup</item>
-        <item name="colorControlHighlight">@color/backgroundColor</item>
+        <item name="colorControlHighlight">@color/white</item>
     </style>
 
 </resources>

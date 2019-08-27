@@ -9,8 +9,6 @@
     <solid android:color="#fff" />
     <stroke android:color="@color/price_txt"
         android:width="0.3dp"/>
-
-
     <corners
         android:radius="1dp" />
 

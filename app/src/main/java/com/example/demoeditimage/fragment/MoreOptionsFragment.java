@@ -17,6 +17,8 @@ import com.example.demoeditimage.R;
 import com.example.demoeditimage.activity.ChangePasswordActivity;
 import com.example.demoeditimage.activity.IntroduceActivity;
 import com.example.demoeditimage.activity.ProfileActivity;
+import com.thekhaeng.pushdownanim.PushDown;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +41,7 @@ public class MoreOptionsFragment extends Fragment {
 
     @BindView(R.id.signOut_layout)
     LinearLayout signOut_layout;
+
     public MoreOptionsFragment() {
         // Required empty public constructor
     }
@@ -49,21 +52,19 @@ public class MoreOptionsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_more_options, container, false);
 
-
         ButterKnife.bind(this, view);
 
         return view;
     }
 
-
     @OnClick(R.id.profile_layout)
-    void clickToProfile (){
+    void clickToProfile() {
         Intent intent = new Intent(getContext(), ProfileActivity.class);
         startActivity(intent);
     }
 
     @OnClick(R.id.support_layout)
-    void clickToSupport (){
+    void clickToSupport() {
         Toast.makeText(getActivity(), "Support", Toast.LENGTH_SHORT).show();
     }
 
@@ -83,7 +84,6 @@ public class MoreOptionsFragment extends Fragment {
                 })
                 .setNegativeButton("Không", null)
                 .show();
-
     }
 
 }

@@ -25,10 +25,10 @@ public class IntroduceActivity extends AppCompatActivity {
         callLoginActivity();
     }
 
-    @OnClick(R.id.btnSignup)
-    void onClickSignup() {
-        callSignUpActivity();
-    }
+//    @OnClick(R.id.btnSignup)
+//    void onClickSignup() {
+//        callSignUpActivity();
+//    }
 
 
     // gọi fragment đăng nhập

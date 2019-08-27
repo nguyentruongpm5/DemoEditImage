@@ -1,12 +1,12 @@
 package com.example.demoeditimage.activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -37,11 +37,15 @@ import com.example.demoeditimage.utils.MyConst;
 import com.example.demoeditimage.utils.RetrofitClient;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,9 +76,11 @@ public class ProductDetailActivity extends AppCompatActivity {
     @BindView(R.id.capture_image_layout)
     LinearLayout capture_image_layout;
 
-    List<String> wordList = new ArrayList<>();
+    List<String> imageList = new ArrayList<>();
 
     private List<ProductImage> productImageList = new ArrayList<>();
+
+
     private ProductImage productImage;
 
     private Product product;
@@ -90,6 +96,9 @@ public class ProductDetailActivity extends AppCompatActivity {
     @BindView(R.id.rclImage)
     RecyclerView rclImage;
 
+    @BindView(R.id.updateItemImg_layout)
+    LinearLayout updateItemImg_layout;
+
     public ProductDetailActivity() {
 
     }
@@ -101,6 +110,12 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        productName_Edt.setFocusable(false);
+        productName_Edt.setClickable(false);
+
+        skuCode_Edt.setFocusable(false);
+        skuCode_Edt.setClickable(false);
+
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
@@ -111,9 +126,9 @@ public class ProductDetailActivity extends AppCompatActivity {
         productName_Edt.setText(product.getName());
 
 
-        wordList.addAll(Arrays.asList(product.getImages()));
+        imageList.addAll(Arrays.asList(product.getImages()));
 
-        for (String urlLink : wordList) {
+        for (String urlLink : imageList) {
             productImage = new ProductImage();
             productImage.setImageUrl(urlLink);
             productImageList.add(productImage);
@@ -139,7 +154,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         showDialog();
     }
 
-    @OnClick(R.id.btnUpdateItemImg)
+    @OnClick(R.id.updateItemImg_layout)
     void clickToupdateItemImg() {
         updateItemImg();
     }
@@ -166,11 +181,12 @@ public class ProductDetailActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     assert response.body() != null;
                     String msg = response.body().getMsg();
-                    if (msg == null || !(msg.equals("Update item image success") || msg.equals("Nothing change for images"))) {
-                        Toast.makeText(ProductDetailActivity.this, "Updated failed!" + "\n" + msg, Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(ProductDetailActivity.this, "Update successfully!" + "\n" + msg, Toast.LENGTH_SHORT).show();
-                    }
+                    if (msg == null || !(msg.equals("Update item image success"))) {
+                        Toast.makeText(ProductDetailActivity.this, "Cập nhật thấtbại, vui lòng cập nhật lại"/*+ "\n" + msg*/, Toast.LENGTH_SHORT).show();
+                    } else if (msg.equals("Nothing change for images")){
+                        Toast.makeText(ProductDetailActivity.this, "Ảnh quá 2MB, vui lòng chọn ảnh khác" /*+ "\n" + msg*/, Toast.LENGTH_SHORT).show();
+                    }else
+                        Toast.makeText(ProductDetailActivity.this, "Cập nhật thành công" /*+ "\n" + msg*/, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -282,19 +298,38 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         } else if (requestCode == GET_FROM_PHONE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
+
                 Uri selectedImgUri = data.getData();
-                currentPhotoPath = getRealPathFromURI(selectedImgUri);
+
+                try {
+                    Bitmap bitmapBefore = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImgUri);
+                    Bitmap bitmapResized = Bitmap.createScaledBitmap(bitmapBefore, (int)(bitmapBefore.getWidth()*0.5), (int)(bitmapBefore.getHeight()*0.5), true);
+
+                    Log.e("img size", "image size: " +(float) bitmapResized.getByteCount()/(512 * 512 * 4)) ;
+
+                    Uri resizeUri = getImageUri(getBaseContext(),bitmapResized);
+                    currentPhotoPath = getRealPathFromURI(resizeUri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
 
                 String id = UUID.randomUUID().toString().replace("-", "");
 
                 new ProductDetailActivity.UploadToCloud().execute(String.valueOf(userId), String.valueOf(shopid), String.valueOf(productCode), id);
 
             } else {
-
             }
         }
     }
 
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
     private String getRealPathFromURI(Uri selectedImgUri) {
         String result;
         Cursor cursor = getContentResolver().query(selectedImgUri, null, null, null, null);
@@ -349,58 +384,14 @@ public class ProductDetailActivity extends AppCompatActivity {
                 return;
             }
 
-            ProductImage productImage1 = new ProductImage(img_url);
+            ProductImage productImage1 = new ProductImage(img_url,false);
             productImageList.add(productImage1);
 //            productImage1.setImageUrl(img_url);
 
+
             imageProductAdapter.notifyDataSetChanged();
 
-
             Toast.makeText(ProductDetailActivity.this, "Thêm ảnh thành công ! ", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-    public File saveBitmapToFile(File file){
-        try {
-
-            // BitmapFactory options to downsize the image
-            BitmapFactory.Options o = new BitmapFactory.Options();
-            o.inJustDecodeBounds = true;
-            o.inSampleSize = 6;
-            // factor of downsizing the image
-
-            FileInputStream inputStream = new FileInputStream(file);
-            //Bitmap selectedBitmap = null;
-            BitmapFactory.decodeStream(inputStream, null, o);
-            inputStream.close();
-
-            // The new size we want to scale to
-            final int REQUIRED_SIZE=75;
-
-            // Find the correct scale value. It should be the power of 2.
-            int scale = 1;
-            while(o.outWidth / scale / 2 >= REQUIRED_SIZE &&
-                    o.outHeight / scale / 2 >= REQUIRED_SIZE) {
-                scale *= 2;
-            }
-
-            BitmapFactory.Options o2 = new BitmapFactory.Options();
-            o2.inSampleSize = scale;
-            inputStream = new FileInputStream(file);
-
-            Bitmap selectedBitmap = BitmapFactory.decodeStream(inputStream, null, o2);
-            inputStream.close();
-
-            // here i override the original image file
-            file.createNewFile();
-            FileOutputStream outputStream = new FileOutputStream(file);
-
-            selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 100 , outputStream);
-
-            return file;
-        } catch (Exception e) {
-            return null;
         }
     }
 }

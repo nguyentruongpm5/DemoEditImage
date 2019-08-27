@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".fragment.ProfileFragment">
+    android:background="@color/backgroundColor"
+    android:orientation="vertical">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/txt_signup"
         android:weightSum="10">
 
         <ImageButton
             android:id="@+id/btnBackToLogin"
-            style="@style/BackButton2"
+            style="@style/BackButton"
             android:layout_weight="1"
             android:minHeight="?attr/actionBarSize" />
 
@@ -25,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="8"
-            android:background="@color/txt_signup"
+            android:background="@color/white"
             android:minHeight="?attr/actionBarSize">
 
             <TextView
@@ -34,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Thông tin khách hàng"
-                android:textColor="@color/backgroundColor"
+                android:textColor="@color/colorBlack"
                 android:textSize="20dp" />
         </android.support.v7.widget.Toolbar>
 
@@ -43,9 +41,20 @@
             style="@style/SaveButton"
             android:layout_weight="1"
             android:minHeight="?attr/actionBarSize"
-            android:visibility="invisible" />
+
+            android:src="@drawable/icons8_trash_24" />
     </LinearLayout>
 
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@drawable/toolbar_dropshadow" />
+
+    </FrameLayout>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/text_input_fullname"
@@ -105,20 +114,26 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:weightSum="1">
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btnChangePassword"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/changePassword_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:background="@drawable/custom_btn_submit"
-            android:text="Đổi mật khẩu"
-            android:textAllCaps="false"
-            android:textColor="@color/backgroundColor" />
-    </LinearLayout>
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/selector_more_options"
+            android:gravity="center"
+            android:minHeight="?attr/actionBarSize">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đổi mật khẩu"
+                android:textColor="@color/Warning_TextView"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+    </LinearLayout>
 </LinearLayout>

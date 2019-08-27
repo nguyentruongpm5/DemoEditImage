@@ -35,7 +35,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    @OnClick(R.id.btnChangePassword)
+    @OnClick(R.id.changePassword_layout)
     void clicktoChangePassword() {
         callChangePasswordActivity();
     }

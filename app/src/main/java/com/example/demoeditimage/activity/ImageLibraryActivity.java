@@ -35,14 +35,38 @@ public class ImageLibraryActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        LinearLayoutManager layoutManager
-                = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-
-        rclImage.setLayoutManager(layoutManager);
+        init();
+        rclImage.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
         rclImage.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
 
         imageProductAdapter = new ImageProductAdapter(productImageList);
+
+
+
+    }
+
+    private void init() {
+        productImageList.add(new ProductImage("https://banhang.shopee.vn/api/v1/cdn_proxy/73edcdfb72eb9958aad86329f73b0ff7",false));
+
+        productImageList.add(new ProductImage("https://banhang.shopee.vn/api/v1/cdn_proxy/03d8288f1fbeb9a5929656685e89be18",false));
+
+
+        productImageList.add(new ProductImage("https://banhang.shopee.vn/api/v1/cdn_proxy/03d8288f1fbeb9a5929656685e89be18",false));
+
+
+        productImageList.add(new ProductImage("https://banhang.shopee.vn/api/v1/cdn_proxy/03d8288f1fbeb9a5929656685e89be18",false));
+
+
+        productImageList.add(new ProductImage("https://banhang.shopee.vn/api/v1/cdn_proxy/03d8288f1fbeb9a5929656685e89be18",false));
+
+        productImageList.add(new ProductImage("https://banhang.shopee.vn/api/v1/cdn_proxy/03d8288f1fbeb9a5929656685e89be18",false));
+
+        productImageList.add(new ProductImage("https://banhang.shopee.vn/api/v1/cdn_proxy/03d8288f1fbeb9a5929656685e89be18",false));
+
+        productImageList.add(new ProductImage("https://banhang.shopee.vn/api/v1/cdn_proxy/03d8288f1fbeb9a5929656685e89be18",false));
+
+        productImageList.add(new ProductImage("https://banhang.shopee.vn/api/v1/cdn_proxy/03d8288f1fbeb9a5929656685e89be18",false));
 
     }
 }

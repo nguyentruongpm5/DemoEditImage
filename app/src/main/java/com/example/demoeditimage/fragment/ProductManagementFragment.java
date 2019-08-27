@@ -1,7 +1,9 @@
 package com.example.demoeditimage.fragment;
 
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -101,7 +103,7 @@ public class ProductManagementFragment extends Fragment {
 //        getProducts();
 
 
-        // gán dữ liẹu cho spinner
+        // gán dữ liệu cho spinner
         getStoreList();
 
 
@@ -121,7 +123,6 @@ public class ProductManagementFragment extends Fragment {
     }
 
     private void getAllItems() {
-        loadingbar.show();
         mProducts.clear();
         more = true;
         offset = 0;
@@ -185,6 +186,7 @@ public class ProductManagementFragment extends Fragment {
                     if (response.isSuccessful()) {
                         product.setName(response.body().getItem().getName());
                         product.setImages(response.body().getItem().getImages());
+                        // die app onBackStack
                         mProducts.set(finalI, product);
                         productItemAdapter.notifyDataSetChanged();
                         loadingbar.cancel();
@@ -286,10 +288,10 @@ public class ProductManagementFragment extends Fragment {
 //        });
 //    }
 
-    @OnClick(R.id.addProductBtn)
-    void clickToAddProduct() {
-        callAddProductActivity();
-    }
+//    @OnClick(R.id.addProductBtn)
+//    void clickToAddProduct() {
+//        callAddProductActivity();
+//    }
 
 
     private void callProductDetailActivity() {
@@ -300,14 +302,20 @@ public class ProductManagementFragment extends Fragment {
         startActivity(intent);
     }
 
-    private void callAddProductActivity() {
-        Intent intent = new Intent(getActivity(), AddProductActivity.class);
-        startActivity(intent);
-    }
+//    private void callAddProductActivity() {
+//        Intent intent = new Intent(getActivity(), AddProductActivity.class);
+//        startActivity(intent);
+//    }
 
     @Override
     public void onResume() {
         super.onResume();
+
+        loadingbar.show();
         getAllItems();
+
+
     }
+
+
 }

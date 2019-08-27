@@ -102,6 +102,11 @@ public class LoginActivity extends AppCompatActivity {
         getUsers();
     }
 
+    @OnClick(R.id.txtForgetPassword)
+    void clickToGetPassword(){
+        callForgotPasswordActivity();
+    }
+
     private void getUsers() {
 
         String userName = unameEdt.getText().toString().trim();
@@ -175,6 +180,11 @@ public class LoginActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
+        startActivity(intent);
+    }
+
+    private void callForgotPasswordActivity() {
+        Intent intent = new Intent(this, ForgotPasswordActivity.class);
         startActivity(intent);
     }
 

@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/backgroundColor">
 
     <!--Icon image-->
     <LinearLayout
@@ -14,7 +14,8 @@
 
         <ImageButton
             android:id="@+id/btnBackToLogin"
-            style="@style/BackButton" />
+            style="@style/BackButton"
+            android:background="@color/backgroundColor"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -91,39 +92,41 @@
 
         <Button
             android:id="@+id/loginBtn"
-            style="@style/LoginButton" />
+            style="@style/LoginButton"
+            android:background="@drawable/button_state_list_animator"
+            android:textColor="@color/button_text_color"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="Hoặc, đăng nhập bằng" />
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:weightSum="1">
-
-            <Button
-                android:id="@+id/btnLoginFacebook"
-                style="@style/BtnFacebook" />
-
-            <!--<Button-->
-            <!--android:id="@+id/btnDangNhapGoogle"-->
+        <!--<TextView-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"-->
-            <!--android:layout_margin="10dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@drawable/google_shape"-->
-            <!--android:drawableLeft="@drawable/ic_google"-->
-            <!--android:text="Google"-->
-            <!--android:textAllCaps="false"-->
-            <!--android:textColor="@color/colorGoogle" />-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:gravity="center"-->
+            <!--android:text="Hoặc, đăng nhập bằng" />-->
 
-        </LinearLayout>
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:weightSum="1">-->
+
+            <!--<Button-->
+                <!--android:id="@+id/btnLoginFacebook"-->
+                <!--style="@style/BtnFacebook" />-->
+
+            <!--&lt;!&ndash;<Button&ndash;&gt;-->
+            <!--&lt;!&ndash;android:id="@+id/btnDangNhapGoogle"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_margin="10dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_weight="1"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:background="@drawable/google_shape"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:drawableLeft="@drawable/ic_google"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:text="Google"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textAllCaps="false"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textColor="@color/colorGoogle" />&ndash;&gt;-->
+
+        <!--</LinearLayout>-->
     </LinearLayout>
 </LinearLayout>
 

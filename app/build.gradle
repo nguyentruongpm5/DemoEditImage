@@ -45,4 +45,10 @@ dependencies {
 
     implementation "com.squareup.picasso:picasso:2.71828"
 
+    implementation( 'com.github.thekhaeng:pushdown-anim-click:1.1.1' ){
+        exclude group: 'com.android.support'
+    }
+
+
+
 }

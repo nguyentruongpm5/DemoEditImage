@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragment.MoreOptionsFragment"
     android:orientation="vertical"
-    android:gravity="top">
+    tools:context=".fragment.MoreOptionsFragment"
+    android:background="@color/backgroundColor">
 
 
     <LinearLayout
         android:id="@+id/toolbarTitle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp">
+        android:layout_height="wrap_content">
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/txt_signup">
+            android:minHeight="?attr/actionBarSize"
+            android:background="@color/white">
+
+
             <TextView
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
@@ -26,31 +28,46 @@
 
                 android:layout_gravity="center"
                 android:text="https://shopee.vn/shop/261393/"
-                android:textColor="@color/backgroundColor"
-                android:textSize="19dp" />
+                android:textColor="@color/colorBlack"
+                android:textSize="20dp" />
 
         </android.support.v7.widget.Toolbar>
+
     </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@drawable/toolbar_dropshadow" />
+
+    </FrameLayout>
+
+
 
     <LinearLayout
         android:id="@+id/profile_layout"
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbarTitle"
         android:layout_marginBottom="30dp"
-        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
         android:background="@drawable/selector_more_options"
-        android:layout_below="@+id/toolbarTitle">
+        android:orientation="horizontal">
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_user"
-            android:minHeight="?android:actionBarSize"/>
+            android:minHeight="?android:actionBarSize"
+            android:src="@drawable/ic_user" />
 
         <RelativeLayout
-            android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:gravity="center|start"
             android:minHeight="?attr/actionBarSize">
 
@@ -67,14 +84,16 @@
                 android:layout_below="@id/txtFullname"
                 android:text="nguyentruongpm5@gmail.com" />
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center|end">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_chevron_right_gray_24dp"/>
+                android:background="@drawable/ic_chevron_right_gray_24dp" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -83,32 +102,35 @@
         android:id="@+id/support_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
         android:layout_below="@id/profile_layout"
-        android:background="@drawable/selector_more_options">
+        android:background="@drawable/selector_more_options"
+        android:minHeight="?attr/actionBarSize">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_user"/>
+            android:src="@drawable/ic_user" />
+
         <TextView
-            android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hỗ trợ"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:text="Hỗ trợ" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center|end">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_chevron_right_gray_24dp"/>
+                android:background="@drawable/ic_chevron_right_gray_24dp" />
         </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom|center"
@@ -127,10 +149,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Đăng xuất"
+                android:textSize="20sp"
                 android:textColor="@color/Warning_TextView" />
         </LinearLayout>
 
 
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
